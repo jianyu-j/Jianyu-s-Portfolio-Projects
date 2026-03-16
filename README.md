@@ -7,7 +7,7 @@
 
 ## About Me
 
-I am a data analyst with a background in finance and analytics focused on transforming complex datasets into insights that support strategic and operational decision making.
+I am a data analyst with a background in finance and actuarial science/ statistics focused on transforming complex datasets into insights that support strategic and operational decision making.
 
 My work spans statistical modeling, machine learning, data pipelines, and business intelligence systems. I am particularly interested in applying analytics to operational optimization, forecasting, and decision support.
 
