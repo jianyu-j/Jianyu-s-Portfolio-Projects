@@ -1,5 +1,3 @@
-# Jianyu-s-Portfolio-Projects
-
 # Jianyu Jia
 ### Python | SQL | Data Modeling | Data Analytics | Machine Learning | Business Intelligence
 
