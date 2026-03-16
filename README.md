@@ -19,7 +19,7 @@ This repository contains selected portfolio projects demonstrating applications 
 
 | Project | Focus Area | Tools | Outcome |
 |--------|------------|------|--------|
-| Hospital Nursing Intervention Pilot | Healthcare Analytics | MySQL, SQL, MySQL Workbench | Database design and hospital bed utilization analysis |
+| [Hospital Nursing Intervention Pilot](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Hospital-Nursing-Intervention-Pilot) | Healthcare Analytics | MySQL, SQL, MySQL Workbench | Database design and hospital bed utilization analysis |
 | Diffusion Transformer Model | Deep Learning | Python, PyTorch | Trained diffusion transformer generative model |
 | Tennis Match Evaluation Model | Machine Learning | Python, Pandas, Scikit-learn | Predictive model evaluating tennis performance |
 
