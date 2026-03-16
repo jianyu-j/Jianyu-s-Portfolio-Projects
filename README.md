@@ -137,8 +137,3 @@ GCP
 Git  
 
 ---
-
-## Contact
-
-LinkedIn: (your LinkedIn link)  
-Email: (your email)
