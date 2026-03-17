@@ -22,6 +22,8 @@ This repository contains selected portfolio projects demonstrating applications 
 | [Hospital Nursing Intervention Pilot](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Hospital-Nursing-Intervention-Pilot) | Healthcare Analytics | MySQL, SQL, MySQL Workbench | Database design and hospital bed utilization analysis |
 | [DiT Super-Resolution](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/dit-super-resolution) | Deep Learning | Python, PyTorch | Trained diffusion transformer generative model |
 | Tennis Match Evaluation Model | Machine Learning | Python, Pandas, Scikit-learn | Predictive model evaluating tennis performance |
+| [Exploratory Analysis & Predictive Modeling](#) | EDA, Predictive Modeling, Storytelling | Python, Tableau | End-to-end analysis with interactive dashboard and written report |
+| [Tennis Player Evaluation System](#) | Machine Learning, Sports Analytics | Python, Pandas, Scikit-learn | Performance evaluation model using historical match data |
 
 ---
 
