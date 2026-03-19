@@ -2,35 +2,40 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Jianyu Jia | Data Portfolio</title>
+  <title>Jianyu Jia | Portfolio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
     body {
-      font-family: Arial, sans-serif;
-      max-width: 1000px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      max-width: 900px;
       margin: 40px auto;
       line-height: 1.6;
-      color: #222;
+      color: #24292f;
     }
 
-    h1 {
-      font-size: 36px;
-      margin-bottom: 5px;
+    h1 { font-size: 32px; }
+    h2 { border-bottom: 1px solid #d0d7de; padding-bottom: 5px; margin-top: 40px; }
+    h3 { margin-top: 25px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
     }
 
-    h2 {
-      margin-top: 40px;
-      border-bottom: 1px solid #ddd;
-      padding-bottom: 5px;
+    th, td {
+      border: 1px solid #d0d7de;
+      padding: 8px;
+      text-align: left;
     }
 
-    h3 {
-      margin-bottom: 5px;
+    th {
+      background-color: #f6f8fa;
     }
 
     a {
-      color: #0366d6;
+      color: #0969da;
       text-decoration: none;
     }
 
@@ -38,31 +43,18 @@
       text-decoration: underline;
     }
 
-    .subtitle {
-      font-weight: bold;
-      margin-bottom: 10px;
+    ul {
+      margin-top: 5px;
     }
 
     .tagline {
-      font-style: italic;
-      margin-bottom: 20px;
+      font-weight: bold;
+      margin-top: 10px;
     }
 
-    .project {
-      margin-bottom: 20px;
-    }
-
-    .tools {
-      color: #555;
-      font-size: 14px;
-    }
-
-    .section {
-      margin-bottom: 30px;
-    }
-
-    ul {
-      padding-left: 20px;
+    .divider {
+      border-top: 1px solid #d0d7de;
+      margin: 20px 0;
     }
   </style>
 </head>
@@ -70,13 +62,14 @@
 <body>
 
 <h1>Jianyu Jia</h1>
-<p class="subtitle">Python | SQL | Data Modeling | Data Analytics | Machine Learning | Business Intelligence</p>
+<p><strong>Python | SQL | Data Modeling | Data Analytics | Machine Learning | Business Intelligence</strong></p>
 <p class="tagline">Finding meaningful patterns in complex data to drive smarter decisions and measurable outcomes.</p>
 
-<div class="section">
+<div class="divider"></div>
+
 <h2>About Me</h2>
 <p>
-I am a data analyst with a background in finance and actuarial science and statistics, focused on transforming complex datasets into insights that support strategic and operational decision making.
+I am a data analyst with a background in finance and actuarial science/statistics focused on transforming complex datasets into insights that support strategic and operational decision making.
 </p>
 
 <p>
@@ -84,92 +77,115 @@ My work spans statistical modeling, machine learning, data pipelines, and busine
 </p>
 
 <p>
-This portfolio showcases selected projects across healthcare, infrastructure analytics, and applied machine learning.
+This repository contains selected portfolio projects demonstrating applications of analytics, machine learning, and data engineering across healthcare, infrastructure analytics, and applied machine learning.
 </p>
-</div>
 
-<div class="section">
-<h2>Portfolio Projects</h2>
+---
 
-<div class="project">
-<h3><a href="https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Hospital-Nursing-Intervention-Pilot">Hospital Nursing Intervention Pilot</a></h3>
-<p class="tools">Healthcare Analytics | MySQL, SQL, MySQL Workbench</p>
-<p>Database design and hospital bed utilization analysis supporting operational decision making.</p>
-</div>
+<h2>Portfolio Overview</h2>
 
-<div class="project">
-<h3><a href="https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/dit-super-resolution">DiT Super Resolution</a></h3>
-<p class="tools">Deep Learning | Python, PyTorch</p>
-<p>Trained a diffusion transformer model for generative tasks and high resolution output generation.</p>
-</div>
+<table>
+<tr>
+  <th>Project</th>
+  <th>Focus Area</th>
+  <th>Tools</th>
+  <th>Outcome</th>
+</tr>
 
-<div class="project">
-<h3>Exploratory Analysis and Predictive Modeling</h3>
-<p class="tools">EDA, Predictive Modeling | Python, Tableau</p>
-<p>End to end analysis combining statistical exploration, modeling, and interactive visualization.</p>
-</div>
+<tr>
+  <td><a href="https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Hospital-Nursing-Intervention-Pilot">Hospital Nursing Intervention Pilot</a></td>
+  <td>Healthcare Analytics</td>
+  <td>MySQL, SQL, MySQL Workbench</td>
+  <td>Database design and hospital bed utilization analysis</td>
+</tr>
 
-<div class="project">
-<h3>Tennis Player Evaluation System</h3>
-<p class="tools">Machine Learning, Sports Analytics | Python, Pandas, Scikit learn</p>
-<p>Predictive model evaluating player performance using historical match data and engineered features.</p>
-</div>
+<tr>
+  <td><a href="https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/dit-super-resolution">DiT Super-Resolution</a></td>
+  <td>Deep Learning</td>
+  <td>Python, PyTorch</td>
+  <td>Trained diffusion transformer generative model</td>
+</tr>
 
-<div class="project">
-<h3><a href="https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Airport%20Fleet%20Electrification%20Analytics">Airport Fleet Electrification Analytics</a></h3>
-<p class="tools">Machine Learning, Time Series, Dashboard Development | Python, Next.js, TypeScript</p>
-<p>Built ensemble forecasting model and operational dashboard for infrastructure analytics.</p>
-</div>
+<tr>
+  <td>Exploratory Analysis & Predictive Modeling</td>
+  <td>EDA, Predictive Modeling, Storytelling</td>
+  <td>Python, Tableau</td>
+  <td>End-to-end analysis with dashboard and report</td>
+</tr>
 
-</div>
+<tr>
+  <td>Tennis Player Evaluation System</td>
+  <td>Machine Learning, Sports Analytics</td>
+  <td>Python, Pandas, Scikit-learn</td>
+  <td>Predictive model evaluating tennis performance</td>
+</tr>
 
-<div class="section">
-<h2>Featured Work</h2>
+<tr>
+  <td><a href="https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Airport%20Fleet%20Electrification%20Analytics">Airport Fleet Electrification Analytics</a></td>
+  <td>ML, Time Series, Dashboard Development</td>
+  <td>Python, Next.js, TypeScript, Supabase</td>
+  <td>Forecasting model and analytics dashboard</td>
+</tr>
+
+</table>
+
+---
+
+<h2>Featured Projects</h2>
 
 <h3>Hospital Nursing Intervention Pilot</h3>
+<p><strong>Tools:</strong> MySQL, SQL, MySQL Workbench</p>
+<p><strong>Overview:</strong> Designed and implemented a healthcare analytics database for operational analysis.</p>
+
 <ul>
   <li>Star schema database design</li>
-  <li>Normalization from first through third normal form</li>
+  <li>Database normalization through third normal form</li>
   <li>Data validation and integrity checks</li>
-  <li>Bed utilization and patient flow analysis</li>
+  <li>Hospital bed utilization analysis</li>
 </ul>
+
+<p><strong>Outcome:</strong> Generated insights on patient flow and operational efficiency.</p>
+
+---
 
 <h3>Diffusion Transformer Model</h3>
+<p><strong>Tools:</strong> Python, PyTorch</p>
+
 <ul>
-  <li>Diffusion based generative modeling</li>
-  <li>Transformer attention architecture</li>
-  <li>Model training and optimization in PyTorch</li>
+  <li>Diffusion-based generative architecture</li>
+  <li>Transformer attention mechanisms</li>
+  <li>Model training and optimization</li>
 </ul>
+
+---
 
 <h3>Tennis Match Evaluation Model</h3>
+<p><strong>Tools:</strong> Python, Pandas, Scikit-learn</p>
+
 <ul>
-  <li>Feature engineering from match level data</li>
+  <li>Feature engineering</li>
   <li>Predictive modeling and validation</li>
-  <li>Performance evaluation using historical outcomes</li>
+  <li>Performance evaluation</li>
 </ul>
 
-</div>
+---
 
-<div class="section">
-<h2>Professional Work (NDA Restricted)</h2>
+<h2>Professional Analytics Work (NDA Restricted)</h2>
 
 <p><strong>EV Charging Analytics at YVR Airport</strong><br>
-Infrastructure analytics using sensor and operational data to identify efficiency patterns and detect system failures.</p>
+Infrastructure analytics using operational data to identify efficiency patterns and detect failures.</p>
 
 <p><strong>HPV Campaign Cross Market Analytics</strong><br>
-Marketing analytics integrating multi source campaign data to evaluate performance and generate automated reporting.</p>
+Marketing analytics integrating multi-source campaign data to evaluate performance.</p>
 
-</div>
+---
 
-<div class="section">
 <h2>Technical Stack</h2>
 
-<p><strong>Programming:</strong> Python, SQL (PostgreSQL, MySQL), R</p>
-<p><strong>Data Science:</strong> Pandas, NumPy, Scikit learn, PyTorch, Statsmodels, MLflow</p>
-<p><strong>Visualization:</strong> Tableau, Power BI, Excel</p>
-<p><strong>Tools:</strong> AWS, GCP, Git</p>
-
-</div>
+<p><strong>Programming Languages:</strong> Python, SQL (PostgreSQL, MySQL), R</p>
+<p><strong>Data Science and Machine Learning:</strong> Pandas, NumPy, Scikit-learn, PyTorch, Statsmodels, MLflow</p>
+<p><strong>Data Visualization:</strong> Tableau, Power BI, Excel</p>
+<p><strong>Cloud and Development Tools:</strong> AWS, GCP, Git</p>
 
 </body>
 </html>
