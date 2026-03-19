@@ -23,7 +23,7 @@ This repository contains selected portfolio projects demonstrating applications 
 | [DiT Super-Resolution](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/dit-super-resolution) | Deep Learning | Python, PyTorch | Trained diffusion transformer generative model |
 | [Exploratory Analysis & Predictive Modeling](#) | EDA, Predictive Modeling, Storytelling | Python, Tableau | End-to-end analysis with interactive dashboard and written report |
 | [Tennis Player Evaluation System](#) | Machine Learning, Sports Analytics | Python, Pandas, Scikit-learn | Predictive model evaluating tennis performance |
-| [Airport Fleet Electrification Analytics](#) | ML, Time Series, Dashboard Development | Python, Next.js, TypeScript, Supabase, Scikit-learn | Ensemble forecasting model and operational analytics dashboard |
+| [Airport Fleet Electrification Analytics](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Airport-Fleet-Electrification-Analytics) | ML, Time Series, Dashboard Development | Python, Next.js, TypeScript, Supabase, Scikit-learn | Ensemble forecasting model and operational analytics dashboard |
 
 ---
 
