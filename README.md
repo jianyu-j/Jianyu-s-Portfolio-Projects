@@ -24,6 +24,7 @@ This repository contains selected portfolio projects demonstrating applications 
 | [Exploratory Analysis & Predictive Modeling](#) | EDA, Predictive Modeling, Storytelling | Python, Tableau | End-to-end analysis with interactive dashboard and written report |
 | [Tennis Player Evaluation System](#) | Machine Learning, Sports Analytics | Python, Pandas, Scikit-learn | Predictive model evaluating tennis performance |
 | [Airport Fleet Electrification Analytics](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Airport%20Fleet%20Electrification%20Analytics) | ML, Time Series, Dashboard Development | Python, Next.js, TypeScript, Supabase, Scikit-learn | Ensemble forecasting model and operational analytics dashboard |
+| [Steeves and Associates BI Dashboard](https://github.com/rahul-s-rajput/Steeves-and-Associates-Dashboard) | Business Intelligence, Forecasting, AI Chatbot | Next.js, Flask, PostgreSQL, Python | Interactive analytics platform with RAG-based chatbot and time-series forecasting |
 
 ---
 
