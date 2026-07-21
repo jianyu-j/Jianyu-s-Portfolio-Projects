@@ -26,7 +26,7 @@ This repository contains selected portfolio projects demonstrating applications 
 | [Airport Fleet Electrification Analytics](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Airport%20Fleet%20Electrification%20Analytics) | ML, Time Series, Dashboard Development | Python, Next.js, TypeScript, Supabase, Scikit-learn | Ensemble forecasting model and operational analytics dashboard |
 | [Steeves and Associates BI Dashboard](https://github.com/rahul-s-rajput/Steeves-and-Associates-Dashboard) | Business Intelligence, Forecasting, AI Chatbot | Next.js, Flask, PostgreSQL, Python | Interactive analytics platform with RAG-based chatbot and time-series forecasting |
 | [Credit Default Scorecard and Expected Loss Model](#) | Credit Risk Modeling | Python, Scikit-learn, XGBoost, SHAP, optbinning | Probability of default scorecard with expected loss framework (PD, LGD, EAD) and model validation writeup (in development) |
-| [Stock Direction Prediction](#) | Machine Learning, Financial Markets | Python, Scikit-learn | Classification model predicting stock price direction |
+| [Stock Direction Prediction](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Stock%20Direction%20Prediction) | Machine Learning, Financial Markets | Python, Scikit-learn | Classification model predicting stock price direction |
 | [Vancouver Housing Investment Analysis](#) | Geospatial property-investment analysis by census area | Python · GeoPandas · Power BI · StatCan Census · CoV Open Data | Star-schema datasets + Power BI map ranking Vancouver DAs by land value & demographics |
 
 ---
