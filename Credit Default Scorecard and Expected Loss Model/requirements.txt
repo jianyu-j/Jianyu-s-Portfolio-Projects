@@ -1,0 +1,11 @@
+# Credit Risk Scorecard and Expected Loss Model
+# Core dependencies. Pinned where the running version is known;
+# the rest float to whatever your environment provides.
+
+pandas
+numpy
+matplotlib
+seaborn
+scikit-learn
+xgboost==3.3.0
+shap==0.52.0
