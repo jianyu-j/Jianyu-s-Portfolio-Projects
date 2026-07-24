@@ -56,8 +56,7 @@ The project uses a public competition dataset of 27 engineered technical indicat
 - Training covers 2000 to 2023 (440,402 rows). Testing covers 2024 to 2026 (53,276 rows).
 - The classes are nearly balanced, about 50.3% up-days in training and 51.6% in test, so no resampling is needed.
 
-One consequence of the anonymization matters later. Because no dates are provided, there is no way to split the training data by time, so cross-validation has to shuffle rows rather than respect chronological order. The data is available on Kaggle and is not included here because of its size.
-
+One consequence of the anonymization matters later. Because no dates are provided, there is no way to split the training data by time, so cross-validation has to shuffle rows rather than respect chronological order. The data comes from the [Stock Market Signal: Predict Next Day Returns](https://www.kaggle.com/competitions/stock-market-signal-predict-next-day-returns/data) competition on Kaggle. Because it is competition data, you need a Kaggle account and have to accept the competition rules before you can download it. It is not included in this repository because of its size.
 ## How it works, step by step
 
 Each step explains what it does and why, then points to the figure or result it produces. You do not need to read the code to follow the story.
