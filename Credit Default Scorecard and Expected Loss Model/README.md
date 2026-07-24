@@ -63,7 +63,7 @@ The project uses the **LendingClub public loan book**, a real record of consumer
 - A loan that was **charged off or defaulted** is treated as a bad outcome (1).
 - Loans still being repaid have no known outcome and are dropped (915,351 of them).
 
-After keeping only resolved loans, the modelling set is **1,345,350 loans**, with an overall default rate of **20.0%**. The data is available on Kaggle (search "wordsforthewise Lending Club") and is not included in this repository because of its size.
+After keeping only resolved loans, the modelling set is **1,345,350 loans**, with an overall default rate of **20.0%**. The data is available on Kaggle at [wordsforthewise/lending-club](https://www.kaggle.com/datasets/wordsforthewise/lending-club/data), and is not included in this repository because of its size.
 
 ---
 
