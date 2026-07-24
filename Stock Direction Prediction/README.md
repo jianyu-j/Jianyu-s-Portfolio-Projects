@@ -194,7 +194,7 @@ Install the dependencies:
 pip install numpy pandas matplotlib seaborn scikit-learn catboost xgboost lightgbm shap
 ```
 
-Place `train.csv`, `test.csv`, and `sample_submission.csv` in a `data/` folder next to the notebook. The configuration cell already points there. Then open **`stock_direction_prediction.ipynb`** and run it top to bottom. The notebook is a linear narrative with the reasoning explained alongside each step. On a GPU kernel the full run takes about 15 to 25 minutes and writes three candidate submission files.
+Download `train.csv`, `test.csv`, and `sample_submission.csv` from the [Kaggle competition page](https://www.kaggle.com/competitions/stock-market-signal-predict-next-day-returns/data) and place them in a `data/` folder next to the notebook. The configuration cell already points there. Then open **`stock_direction_prediction.ipynb`** and run it top to bottom. The notebook is a linear narrative with the reasoning explained alongside each step. On a GPU kernel the full run takes about 15 to 25 minutes and writes three candidate submission files.
 
 The notebook defaults to CPU for portability. On a machine with a CUDA GPU, set CatBoost `"task_type": "GPU"` and XGBoost `"device": "cuda"` in the configuration cell for a substantial speedup.
 
