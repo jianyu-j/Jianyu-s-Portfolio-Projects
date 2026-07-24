@@ -1,143 +1,178 @@
-# Jianyu Jia
-### Python | SQL | Data Modeling | Data Analytics | Machine Learning | Business Intelligence
+<h1 align="center">Jianyu Jia</h1>
 
-**Finding meaningful patterns in complex data to drive smarter decisions and measurable outcomes.**
+<p align="center">
+  <b>Data Scientist · Machine Learning &amp; Statistical Modeling</b><br>
+  Turning complex, messy data into clear decisions and measurable outcomes.
+</p>
 
----
+<p align="center">
+  <i>Forecasting&nbsp; ·&nbsp; Operational Optimization&nbsp; ·&nbsp; Credit Risk&nbsp; ·&nbsp; BI &amp; Decision Support</i>
+</p>
 
-## About Me
+<p align="center">📍 Vancouver, BC &nbsp;·&nbsp; 🎓 MPS Analytics @ Northeastern University</p>
 
-I am a data analyst with a background in finance and actuarial science/ statistics focused on transforming complex datasets into insights that support strategic and operational decision making.
-
-My work spans statistical modeling, machine learning, data pipelines, and business intelligence systems. I am particularly interested in applying analytics to operational optimization, forecasting, and decision support.
-
-This repository contains selected portfolio projects demonstrating applications of analytics, machine learning, and data engineering across healthcare, infrastructure analytics, and applied machine learning.
-
----
-
-## Portfolio Overview
-
-| Project | Focus Area | Tools | Outcome |
-|--------|------------|------|--------|
-| [Hospital Nursing Intervention Pilot](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Hospital-Nursing-Intervention-Pilot) | Healthcare Analytics | MySQL, SQL, MySQL Workbench | Database design and hospital bed utilization analysis |
-| [DiT Super-Resolution](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/dit-super-resolution) | Deep Learning | Python, PyTorch | Trained diffusion transformer generative model |
-| [Exploratory Analysis & Predictive Modeling](#) | EDA, Predictive Modeling, Storytelling | Python, Tableau | End-to-end analysis with interactive dashboard and written report |
-| [Tennis Player Evaluation System](#) | Machine Learning, Sports Analytics | Python, Pandas, Scikit-learn | Predictive model evaluating tennis performance |
-| [Airport Fleet Electrification Analytics](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Airport%20Fleet%20Electrification%20Analytics) | ML, Time Series, Dashboard Development | Python, Next.js, TypeScript, Supabase, Scikit-learn | Ensemble forecasting model and operational analytics dashboard |
-| [Steeves and Associates BI Dashboard](https://github.com/rahul-s-rajput/Steeves-and-Associates-Dashboard) | Business Intelligence, Forecasting, AI Chatbot | Next.js, Flask, PostgreSQL, Python | Interactive analytics platform with RAG-based chatbot and time-series forecasting |
-| [Credit Default Scorecard and Expected Loss Model](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/blob/main/Credit%20Default%20Scorecard%20and%20Expected%20Loss%20Model/README.md) | Credit Risk Modeling | Python, Scikit-learn, XGBoost, SHAP, optbinning | Probability of default scorecard with expected loss framework (PD, LGD, EAD) and model validation writeup (in development) |
-| [Stock Direction Prediction](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Stock%20Direction%20Prediction) | Machine Learning, Financial Markets | Python, Scikit-learn | Classification model predicting stock price direction |
-| [Vancouver Housing Investment Analysis](#) | Geospatial property-investment analysis by census area | Python · GeoPandas · Power BI · StatCan Census · CoV Open Data | Star-schema datasets + Power BI map ranking Vancouver DAs by land value & demographics |
+<p align="center">
+  <a href="https://www.linkedin.com/in/YOUR-HANDLE"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a>
+  <a href="https://github.com/jianyu-j"><img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a>
+  <a href="https://www.kaggle.com/YOUR-HANDLE"><img src="https://img.shields.io/badge/Kaggle-20BEFF?style=for-the-badge&logo=kaggle&logoColor=white" alt="Kaggle"></a>
+  <a href="mailto:jianyu.jia00@gmail.com"><img src="https://img.shields.io/badge/Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"></a>
+</p>
 
 ---
 
-## Featured Projects
+## 👋 About Me
+
+I'm a data scientist with roots in **finance and actuarial science** who turns complex, messy datasets into insights that drive strategic and operational decisions. My work spans **statistical modeling, machine learning, data pipelines, and business intelligence**, with a particular focus on forecasting, operational optimization, and decision support.
+
+I recently completed a **Master of Professional Studies in Analytics (Applied Machine Intelligence)** at Northeastern University, building on a background in actuarial science and finance from the University of Nebraska–Lincoln. Alongside my project work, I serve as **Partnership Lead at Data for Good Vancouver**, where I translate stakeholder needs into structured, deliverable data initiatives for nonprofit partners.
+
+This repository collects selected portfolio projects across **healthcare, infrastructure &amp; operations, credit risk, financial markets, and applied deep learning.**
+
+---
+
+## 🛠️ Tech Stack
+
+**Languages &amp; Query**  
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
+![R](https://img.shields.io/badge/R-276DC3?style=flat-square&logo=r&logoColor=white)
+![SQL](https://img.shields.io/badge/SQL-025E8C?style=flat-square)
+![MATLAB](https://img.shields.io/badge/MATLAB-0076A8?style=flat-square)
+
+**Machine Learning &amp; Data Science**  
+![NumPy](https://img.shields.io/badge/NumPy-013243?style=flat-square&logo=numpy&logoColor=white)
+![pandas](https://img.shields.io/badge/pandas-150458?style=flat-square&logo=pandas&logoColor=white)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=flat-square&logo=scikitlearn&logoColor=white)
+![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=flat-square&logo=pytorch&logoColor=white)
+![SciPy](https://img.shields.io/badge/SciPy-8CAAE6?style=flat-square&logo=scipy&logoColor=white)
+![Statsmodels](https://img.shields.io/badge/Statsmodels-3D6DB3?style=flat-square)
+![MLflow](https://img.shields.io/badge/MLflow-0194E2?style=flat-square&logo=mlflow&logoColor=white)
+
+**Visualization &amp; BI**  
+![Matplotlib](https://img.shields.io/badge/Matplotlib-11557C?style=flat-square)
+![Seaborn](https://img.shields.io/badge/Seaborn-4C72B0?style=flat-square)
+![Plotly](https://img.shields.io/badge/Plotly-3F4F75?style=flat-square&logo=plotly&logoColor=white)
+![Tableau](https://img.shields.io/badge/Tableau-E97627?style=flat-square&logo=tableau&logoColor=white)
+![Power BI](https://img.shields.io/badge/Power_BI-F2C811?style=flat-square&logo=powerbi&logoColor=black)
+
+**Data, Cloud &amp; Tools**  
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white)
+![AWS](https://img.shields.io/badge/AWS-232F3E?style=flat-square&logo=amazonwebservices&logoColor=white)
+![Excel](https://img.shields.io/badge/Excel-217346?style=flat-square&logo=microsoftexcel&logoColor=white)
+![Git](https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white)
+![Jupyter](https://img.shields.io/badge/Jupyter-F37626?style=flat-square&logo=jupyter&logoColor=white)
+
+---
+
+## 📂 Portfolio Overview
+
+| Project | Domain | Stack | What It Delivers |
+|---|---|---|---|
+| **[Steeves &amp; Associates BI Platform](https://github.com/rahul-s-rajput/Steeves-and-Associates-Dashboard)** | Business Intelligence · Forecasting · RAG | Next.js, Flask, PostgreSQL, Python | Analytics platform with a RAG chatbot and time-series forecasting |
+| **[Airport Fleet Electrification Analytics](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Airport%20Fleet%20Electrification%20Analytics)** | ML · Time Series · Full-Stack Dashboard | Python, Next.js, TypeScript, Supabase, Scikit-learn | Ensemble forecasting model + operational analytics dashboard |
+| **[Credit Default Scorecard &amp; Expected Loss](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/blob/main/Credit%20Default%20Scorecard%20and%20Expected%20Loss%20Model/README.md)** | Credit Risk Modeling | Python, Scikit-learn, XGBoost, SHAP, optbinning | PD scorecard with a PD / LGD / EAD expected-loss framework *(in development)* |
+| **[DiT Super-Resolution](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/dit-super-resolution)** | Deep Learning · Generative Models | Python, PyTorch | Trained a diffusion transformer for image super-resolution |
+| **[Hospital Nursing Intervention Pilot](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Hospital-Nursing-Intervention-Pilot)** | Healthcare Analytics | MySQL, SQL, MySQL Workbench | Star-schema database + hospital bed-utilization analysis |
+| **[Stock Direction Prediction](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Stock%20Direction%20Prediction)** | ML · Financial Markets | Python, Scikit-learn | Classification model predicting stock price direction |
+| **Tennis Player Evaluation System** *(in progress)* | ML · Sports Analytics | Python, Pandas, Scikit-learn | Model evaluating player performance &amp; match outcomes |
+| **Vancouver Housing Investment Analysis** *(in progress)* | Geospatial · Investment Analytics | Python, GeoPandas, Power BI, StatCan | Power BI map ranking Vancouver areas by land value &amp; demographics |
+| **Exploratory Analysis &amp; Predictive Modeling** *(in progress)* | EDA · Predictive Modeling · Storytelling | Python, Tableau | End-to-end analysis with dashboard + written report |
+
+---
+
+## ⭐ Featured Projects
+
+### Steeves &amp; Associates — AI Business Intelligence Platform
+*Next.js · Flask · PostgreSQL · Python · Scikit-learn · Statsmodels*
+
+An interactive BI platform for a Vancouver IT consultancy that pairs time-series forecasting with a natural-language chatbot built on a RAG framework.
+
+- Built a **Holt-Winters exponential smoothing** model with seasonal decomposition on 60 months of history, reaching **95.4% forecast accuracy (MAPE 4.6%)** and projecting **~$2.2M in revenue** with quantified confidence intervals.
+- Engineered a **k-means clustering** algorithm on multi-dimensional resource-performance data to segment resources and surface reallocation opportunities.
+- Architected an end-to-end ML pipeline (preprocessing → feature engineering → training → validation → deployment), integrated with a **RAG framework** for natural-language querying of BI outputs.
+
+🔗 **[View Project →](https://github.com/rahul-s-rajput/Steeves-and-Associates-Dashboard)**
+
+---
+
+### Airport Fleet Electrification Analytics
+*Python · Scikit-learn · Next.js · TypeScript · Supabase*
+
+Forecasting and operational analytics for electrifying airport ground-support fleets, delivered as a full-stack analytics dashboard.
+
+- Developed an **ensemble forecasting model** for charging and energy demand.
+- Built operational analytics to expose capacity gaps and prioritize infrastructure decisions.
+- Shipped an interactive **full-stack dashboard** (Next.js + TypeScript + Supabase) for exploring forecasts and operational metrics.
+
+🔗 **[View Project →](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Airport%20Fleet%20Electrification%20Analytics)**
+
+---
+
+### Credit Default Scorecard &amp; Expected Loss Model  *(in development)*
+*Python · Scikit-learn · XGBoost · SHAP · optbinning*
+
+A credit-risk model that estimates probability of default and translates it into an expected-loss framework.
+
+- Built a **PD scorecard** using optimal binning and weight-of-evidence transformations (`optbinning`) for interpretable, monotonic scoring.
+- Benchmarked against a gradient-boosted model (**XGBoost**) with **SHAP** for explainability.
+- Combined **PD, LGD, and EAD** into a full **expected-loss** framework, with a model-validation writeup covering discrimination and calibration.
+
+🔗 **[View Project →](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/blob/main/Credit%20Default%20Scorecard%20and%20Expected%20Loss%20Model/README.md)**
+
+---
+
+### DiT Super-Resolution — Diffusion Transformer
+*Python · PyTorch*
+
+Implemented and trained a **Diffusion Transformer (DiT)** architecture for image super-resolution.
+
+- Developed a diffusion-based generative architecture with **transformer attention** mechanisms.
+- Handled model training and optimization end-to-end in **PyTorch**.
+- Evaluated generated-output quality and overall model performance.
+
+🔗 **[View Project →](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/dit-super-resolution)**
+
+---
 
 ### Hospital Nursing Intervention Pilot
+*MySQL · SQL · MySQL Workbench*
 
-**Tools**  
-MySQL  
-SQL  
-MySQL Workbench  
+A healthcare analytics database supporting operational analysis for a hospital nursing-intervention program.
 
-**Overview**
+- Designed a **star-schema** database (ERD, fact and dimension tables) and normalized from **1NF through 3NF**.
+- Implemented data validation and integrity checks across the pipeline.
+- Ran **bed-volume and utilization-rate** analysis, delivering operational insights on patient flow and data-driven recommendations for hospital leadership.
 
-Designed and implemented a healthcare analytics database to support operational analysis for a hospital nursing intervention program.
-
-**Work Included**
-
-• Star schema database design  
-• Database normalization from first normal form through third normal form  
-• Data validation and integrity checks  
-• Hospital bed volume analysis  
-• Utilization rate modeling  
-
-**Outcome**
-
-Generated operational insights on bed utilization and patient flow and provided data driven recommendations for hospital leadership.
+🔗 **[View Project →](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Hospital-Nursing-Intervention-Pilot)**
 
 ---
 
-### Diffusion Transformer Model
+## 🔒 Selected Professional Work (Under NDA)
 
-**Tools**  
-Python  
-PyTorch  
+Some professional analytics work can't be shared publicly due to confidentiality agreements. These are summarized at a high level.
 
-**Overview**
-
-Implemented and trained a diffusion transformer architecture for generative modeling tasks.
-
-**Work Included**
-
-• Development of diffusion based generative architecture  
-• Transformer attention mechanisms  
-• Model training and optimization using PyTorch  
-• Evaluation of generated outputs and model performance
+- **EV Charging Analytics — YVR Airport** — Infrastructure analytics on sensor and operational data to identify efficiency patterns and detect system failures across a large charger network.
+- **HPV Campaign Cross-Market Analytics** — Multi-source marketing analytics integrating campaign data to evaluate advertising performance across markets and generate automated reporting metrics.
 
 ---
 
-### Tennis Match Evaluation Model
+## 🎓 Education
 
-**Tools**  
-Python  
-Pandas  
-Scikit learn  
+**Northeastern University** — *Master of Professional Studies in Analytics (Applied Machine Intelligence)*  
+GPA 3.80 · Sep 2024 – May 2026 · Vancouver, BC
 
-**Overview**
-
-A predictive analytics model designed to evaluate tennis player performance and match outcomes using historical match data and player statistics.
-
-**Work Included**
-
-• Data preprocessing and feature engineering  
-• Player performance metric construction  
-• Predictive model development and validation  
-• Model evaluation using historical match outcomes
+**University of Nebraska–Lincoln** — *B.S. in Business Administration, Finance &amp; Actuarial Science*  
+Aug 2018 – Dec 2022 · Lincoln, NE
 
 ---
 
-## Professional Analytics Work (NDA Restricted)
+## Let's Connect
 
-Some professional analytics work cannot be publicly shared due to confidentiality agreements. The following projects are summarized at a high level.
+I'm always open to conversations about data science, analytics, and forecasting.
 
-**EV Charging Analytics at YVR Airport**
-
-Infrastructure analytics project using sensor and operational data to identify efficiency patterns and detect system failures.
-
-**HPV Campaign Cross Market Analytics**
-
-Marketing analytics project integrating multi source campaign data to evaluate advertising performance across markets and generate automated reporting metrics.
-
----
-
-## Technical Stack
-
-### Programming Languages
-
-Python  
-SQL (PostgreSQL, MySQL)  
-R  
-
-### Data Science and Machine Learning
-
-Pandas  
-NumPy  
-Scikit learn  
-PyTorch  
-Statsmodels  
-MLflow  
-
-### Data Visualization and Analytics
-
-Tableau  
-Power BI  
-Excel  
-
-### Cloud and Development Tools
-
-AWS  
-GCP  
-Git  
-
----
+<p align="left">
+  <a href="https://www.linkedin.com/in/YOUR-HANDLE"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a>
+  <a href="mailto:jianyu.jia00@gmail.com"><img src="https://img.shields.io/badge/Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"></a>
+  <a href="https://www.kaggle.com/YOUR-HANDLE"><img src="https://img.shields.io/badge/Kaggle-20BEFF?style=for-the-badge&logo=kaggle&logoColor=white" alt="Kaggle"></a>
+  <a href="https://github.com/jianyu-j"><img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a>
+</p>
