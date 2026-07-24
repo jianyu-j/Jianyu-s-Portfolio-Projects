@@ -304,7 +304,7 @@ Install the dependencies:
 pip install pandas numpy matplotlib seaborn scikit-learn xgboost shap
 ```
 
-Download the LendingClub accepted-loans file from Kaggle (search "wordsforthewise Lending Club"). Then either set the path in the notebook's configuration cell, or point an environment variable at it:
+Download the LendingClub accepted-loans file from the [wordsforthewise/lending-club dataset on Kaggle](https://www.kaggle.com/datasets/wordsforthewise/lending-club/data). Then either set the path in the notebook's configuration cell, or point an environment variable at it:
 
 ```
 export LENDINGCLUB_ACCEPTED="/path/to/accepted_2007_to_2018Q4.csv"
