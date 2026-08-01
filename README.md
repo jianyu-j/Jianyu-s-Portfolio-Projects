@@ -75,7 +75,7 @@ This repository collects selected portfolio projects across **healthcare, infras
 | **[DiT Super-Resolution](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/dit-super-resolution)** | Deep Learning · Generative Models | Python, PyTorch | Trained a diffusion transformer for image super-resolution |
 | **[Hospital Nursing Intervention Pilot](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Hospital-Nursing-Intervention-Pilot)** | Healthcare Analytics · Data Modeling | MySQL, SQL, MySQL Workbench | Star-schema database (ERD, fact and dimension tables) with SQL analysis of hospital bed utilization |
 | **[Stock Direction Prediction](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Stock%20Direction%20Prediction)** | ML · Financial Markets | Python, Scikit-learn | Classification model predicting stock price direction |
-| **CourtIQ Tennis Platform** *(in progress)* | Full-Stack · Product Analytics | React, Tailwind, Supabase, PostgreSQL | Five-portal platform connecting players, coaches, and clubs, with a planned analytics layer covering LTV, churn risk, and revenue forecasting |
+| **CourtIQ Tennis Platform** *(in progress)* | Full-Stack · Computer Vision · Product Analytics | React, Tailwind, Supabase, PostgreSQL, Python | Five-portal platform for players, coaches, and clubs, with a video-based self-rating feature built on pose estimation and ball tracking |
 | **Vancouver Housing Investment Analysis** *(in progress)* | Geospatial · Investment Analytics | Python, GeoPandas, Power BI, StatCan | Power BI map ranking Vancouver areas by land value & demographics |
 
 ---
@@ -157,6 +157,19 @@ A healthcare analytics database supporting operational analysis of a nursing-int
 - Wrote analytical SQL, including **window functions**, to derive **bed-volume and utilization-rate** metrics, delivering insights on patient flow and data-driven recommendations for hospital leadership.
 
 **[View Project →](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Hospital-Nursing-Intervention-Pilot)**
+
+---
+
+### CourtIQ Tennis Platform *(in progress)*
+*React · Tailwind · Supabase · PostgreSQL · Python · MediaPipe · TrackNet*
+
+A platform connecting players, coaches, and clubs, where a computer vision model lets players upload match video and rate their own performance.
+
+- Gathered functional requirements, built the **React frontend across five portals**, and designed the **PostgreSQL schema in Supabase**, covering the full cycle from requirement to build to testing.
+- Built the self-rating feature on two models: **MediaPipe Pose** for player body-joint tracking and **TrackNet** for ball tracking, combined into stroke and movement metrics surfaced on the player tab.
+- Specified the Revenue module (CSV payment import with automatic student creation) and the analytics roadmap covering lifetime value, churn risk, coach profitability, and revenue forecasting.
+
+**Known limitation:** the vision model is constrained by a small training video set, so ratings are directional rather than precise. Expanding the video corpus is the next step.
 
 ---
 
