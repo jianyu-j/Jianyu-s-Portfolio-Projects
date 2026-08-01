@@ -73,9 +73,9 @@ This repository collects selected portfolio projects across **healthcare, infras
 | **[Credit Default Scorecard & Expected Loss](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/blob/main/Credit%20Default%20Scorecard%20and%20Expected%20Loss%20Model/README.md)** | Credit Risk Modeling | Python, Scikit-learn, XGBoost, SHAP, optbinning | PD scorecard with a PD / LGD / EAD expected-loss framework |
 | **[How LEGO Grew](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/LEGO%20Through%20the%20Decades)** | Data Visualization · EDA · Storytelling | Tableau | Interactive data story on how LEGO sets, colors, and themes evolved over 70+ years · **[Live Dashboard](https://public.tableau.com/app/profile/jianyu.jia1246/viz/HowLEGOGrew/LEGODASHBOARD)** |
 | **[DiT Super-Resolution](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/dit-super-resolution)** | Deep Learning · Generative Models | Python, PyTorch | Trained a diffusion transformer for image super-resolution |
-| **[Hospital Nursing Intervention Pilot](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Hospital-Nursing-Intervention-Pilot)** | Healthcare Analytics | MySQL, SQL, MySQL Workbench | Star-schema database + hospital bed-utilization analysis |
+| **[Hospital Nursing Intervention Pilot](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Hospital-Nursing-Intervention-Pilot)** | Healthcare Analytics · Data Modeling | MySQL, SQL, MySQL Workbench | Star-schema database (ERD, fact and dimension tables) with SQL analysis of hospital bed utilization |
 | **[Stock Direction Prediction](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Stock%20Direction%20Prediction)** | ML · Financial Markets | Python, Scikit-learn | Classification model predicting stock price direction |
-| **Tennis Player Evaluation System** *(in progress)* | ML · Sports Analytics | Python, Pandas, Scikit-learn | Model evaluating player performance & match outcomes |
+| **CourtIQ Tennis Platform** *(in progress)* | Full-Stack · Product Analytics | React, Tailwind, Supabase, PostgreSQL | Five-portal platform connecting players, coaches, and clubs, with a planned analytics layer covering LTV, churn risk, and revenue forecasting |
 | **Vancouver Housing Investment Analysis** *(in progress)* | Geospatial · Investment Analytics | Python, GeoPandas, Power BI, StatCan | Power BI map ranking Vancouver areas by land value & demographics |
 
 ---
@@ -150,11 +150,11 @@ Implemented and trained a **Diffusion Transformer (DiT)** architecture for image
 ### Hospital Nursing Intervention Pilot
 *MySQL · SQL · MySQL Workbench*
 
-A healthcare analytics database supporting operational analysis for a hospital nursing-intervention program.
+A healthcare analytics database supporting operational analysis of a nursing-intervention pilot for an integrated delivery system, delivered with a written program report.
 
 - Designed a **star-schema** database (ERD, fact and dimension tables) and normalized from **1NF through 3NF**.
-- Implemented data validation and integrity checks across the pipeline.
-- Ran **bed-volume and utilization-rate** analysis, delivering operational insights on patient flow and data-driven recommendations for hospital leadership.
+- Built the CSV loading pipeline and implemented data validation and integrity checks across the model.
+- Wrote analytical SQL, including **window functions**, to derive **bed-volume and utilization-rate** metrics, delivering insights on patient flow and data-driven recommendations for hospital leadership.
 
 **[View Project →](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Hospital-Nursing-Intervention-Pilot)**
 
