@@ -9,7 +9,7 @@
   <i>Forecasting&nbsp; ·&nbsp; Operational Optimization&nbsp; ·&nbsp; Credit Risk&nbsp; ·&nbsp; BI &amp; Decision Support</i>
 </p>
 
-<p align="center">📍 Vancouver, BC &nbsp;·&nbsp; 🎓 MPS Analytics @ Northeastern University</p>
+<p align="center">Vancouver, BC &nbsp;·&nbsp; MPS Analytics @ Northeastern University</p>
 
 <p align="center">
   <a href="https://www.linkedin.com/in/jianyujia"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a>
@@ -20,25 +20,25 @@
 
 ---
 
-## 👋 About Me
+## About Me
 
 I'm a data scientist with roots in **finance and actuarial science** who turns complex, messy datasets into insights that drive strategic and operational decisions. My work spans **statistical modeling, machine learning, data pipelines, and business intelligence**, with a particular focus on forecasting, operational optimization, and decision support.
 
-I recently completed a **Master of Professional Studies in Analytics (Applied Machine Intelligence)** at Northeastern University, building on a background in actuarial science and finance from the University of Nebraska–Lincoln. Alongside my project work, I serve as **Partnership Lead at Data for Good Vancouver**, where I translate stakeholder needs into structured, deliverable data initiatives for nonprofit partners.
+I recently completed a **Master of Professional Studies in Analytics (Applied Machine Intelligence)** at Northeastern University, building on a background in actuarial science and finance from the University of Nebraska-Lincoln. Alongside my project work, I serve as **Partnership Lead at Data for Good Vancouver**, where I translate stakeholder needs into structured, deliverable data initiatives for nonprofit partners.
 
-This repository collects selected portfolio projects across **healthcare, infrastructure &amp; operations, credit risk, financial markets, and applied deep learning.**
+This repository collects selected portfolio projects across **healthcare, infrastructure & operations, credit risk, financial markets, applied deep learning, and data storytelling.**
 
 ---
 
 ## Tech Stack
 
-**Languages &amp; Query**  
+**Languages & Query**  
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
 ![R](https://img.shields.io/badge/R-276DC3?style=flat-square&logo=r&logoColor=white)
 ![SQL](https://img.shields.io/badge/SQL-025E8C?style=flat-square)
 ![MATLAB](https://img.shields.io/badge/MATLAB-0076A8?style=flat-square)
 
-**Machine Learning &amp; Data Science**  
+**Machine Learning & Data Science**  
 ![NumPy](https://img.shields.io/badge/NumPy-013243?style=flat-square&logo=numpy&logoColor=white)
 ![pandas](https://img.shields.io/badge/pandas-150458?style=flat-square&logo=pandas&logoColor=white)
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=flat-square&logo=scikitlearn&logoColor=white)
@@ -47,14 +47,14 @@ This repository collects selected portfolio projects across **healthcare, infras
 ![Statsmodels](https://img.shields.io/badge/Statsmodels-3D6DB3?style=flat-square)
 ![MLflow](https://img.shields.io/badge/MLflow-0194E2?style=flat-square&logo=mlflow&logoColor=white)
 
-**Visualization &amp; BI**  
+**Visualization & BI**  
 ![Matplotlib](https://img.shields.io/badge/Matplotlib-11557C?style=flat-square)
 ![Seaborn](https://img.shields.io/badge/Seaborn-4C72B0?style=flat-square)
 ![Plotly](https://img.shields.io/badge/Plotly-3F4F75?style=flat-square&logo=plotly&logoColor=white)
 ![Tableau](https://img.shields.io/badge/Tableau-E97627?style=flat-square&logo=tableau&logoColor=white)
 ![Power BI](https://img.shields.io/badge/Power_BI-F2C811?style=flat-square&logo=powerbi&logoColor=black)
 
-**Data, Cloud &amp; Tools**  
+**Data, Cloud & Tools**  
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white)
 ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white)
 ![AWS](https://img.shields.io/badge/AWS-232F3E?style=flat-square&logo=amazonwebservices&logoColor=white)
@@ -68,21 +68,21 @@ This repository collects selected portfolio projects across **healthcare, infras
 
 | Project | Domain | Stack | What It Delivers |
 |---|---|---|---|
-| **[Steeves &amp; Associates BI Platform](https://github.com/rahul-s-rajput/Steeves-and-Associates-Dashboard)** | Business Intelligence · Forecasting · RAG | Next.js, Flask, PostgreSQL, Python | Analytics platform with a RAG chatbot and time-series forecasting |
+| **[Steeves & Associates BI Platform](https://github.com/rahul-s-rajput/Steeves-and-Associates-Dashboard)** | Business Intelligence · Forecasting · RAG | Next.js, Flask, PostgreSQL, Python | Analytics platform with a RAG chatbot and time-series forecasting |
 | **[Airport Fleet Electrification Analytics](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Airport%20Fleet%20Electrification%20Analytics)** | ML · Time Series · Full-Stack Dashboard | Python, Next.js, TypeScript, Supabase, Scikit-learn | Ensemble forecasting model + operational analytics dashboard |
-| **[Credit Default Scorecard &amp; Expected Loss](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/blob/main/Credit%20Default%20Scorecard%20and%20Expected%20Loss%20Model/README.md)** | Credit Risk Modeling | Python, Scikit-learn, XGBoost, SHAP, optbinning | PD scorecard with a PD / LGD / EAD expected-loss framework |
+| **[Credit Default Scorecard & Expected Loss](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/blob/main/Credit%20Default%20Scorecard%20and%20Expected%20Loss%20Model/README.md)** | Credit Risk Modeling | Python, Scikit-learn, XGBoost, SHAP, optbinning | PD scorecard with a PD / LGD / EAD expected-loss framework |
+| **[How LEGO Grew](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/LEGO%20Through%20the%20Decades)** | Data Visualization · EDA · Storytelling | Tableau | Interactive data story on how LEGO sets, colors, and themes evolved over 70+ years · **[Live Dashboard](https://public.tableau.com/app/profile/jianyu.jia1246/viz/HowLEGOGrew/LEGODASHBOARD)** |
 | **[DiT Super-Resolution](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/dit-super-resolution)** | Deep Learning · Generative Models | Python, PyTorch | Trained a diffusion transformer for image super-resolution |
 | **[Hospital Nursing Intervention Pilot](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Hospital-Nursing-Intervention-Pilot)** | Healthcare Analytics | MySQL, SQL, MySQL Workbench | Star-schema database + hospital bed-utilization analysis |
 | **[Stock Direction Prediction](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Stock%20Direction%20Prediction)** | ML · Financial Markets | Python, Scikit-learn | Classification model predicting stock price direction |
-| **Tennis Player Evaluation System** *(in progress)* | ML · Sports Analytics | Python, Pandas, Scikit-learn | Model evaluating player performance &amp; match outcomes |
-| **Vancouver Housing Investment Analysis** *(in progress)* | Geospatial · Investment Analytics | Python, GeoPandas, Power BI, StatCan | Power BI map ranking Vancouver areas by land value &amp; demographics |
-| **[How LEGO Grew](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/LEGO%20Through%20the%20Decades)** | Data Visualization · EDA · Storytelling | Tableau | Interactive data story on how LEGO sets, colors, and themes evolved over 70+ years · **[▶ Live Dashboard](https://public.tableau.com/app/profile/jianyu.jia1246/viz/HowLEGOGrew/LEGODASHBOARD)** |
+| **Tennis Player Evaluation System** *(in progress)* | ML · Sports Analytics | Python, Pandas, Scikit-learn | Model evaluating player performance & match outcomes |
+| **Vancouver Housing Investment Analysis** *(in progress)* | Geospatial · Investment Analytics | Python, GeoPandas, Power BI, StatCan | Power BI map ranking Vancouver areas by land value & demographics |
 
 ---
 
 ## Featured Projects
 
-### Steeves &amp; Associates — AI Business Intelligence Platform
+### Steeves & Associates: AI Business Intelligence Platform
 *Next.js · Flask · PostgreSQL · Python · Scikit-learn · Statsmodels*
 
 An interactive BI platform for a Vancouver IT consultancy that pairs time-series forecasting with a natural-language chatbot built on a RAG framework.
@@ -91,7 +91,7 @@ An interactive BI platform for a Vancouver IT consultancy that pairs time-series
 - Engineered a **k-means clustering** algorithm on multi-dimensional resource-performance data to segment resources and surface reallocation opportunities.
 - Architected an end-to-end ML pipeline (preprocessing → feature engineering → training → validation → deployment), integrated with a **RAG framework** for natural-language querying of BI outputs.
 
-🔗 **[View Project →](https://github.com/rahul-s-rajput/Steeves-and-Associates-Dashboard)**
+**[View Project →](https://github.com/rahul-s-rajput/Steeves-and-Associates-Dashboard)**
 
 ---
 
@@ -104,11 +104,11 @@ Forecasting and operational analytics for electrifying airport ground-support fl
 - Built operational analytics to expose capacity gaps and prioritize infrastructure decisions.
 - Shipped an interactive **full-stack dashboard** (Next.js + TypeScript + Supabase) for exploring forecasts and operational metrics.
 
-🔗 **[View Project →](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Airport%20Fleet%20Electrification%20Analytics)**
+**[View Project →](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Airport%20Fleet%20Electrification%20Analytics)**
 
 ---
 
-### Credit Default Scorecard &amp; Expected Loss Model  *(in development)*
+### Credit Default Scorecard & Expected Loss Model
 *Python · Scikit-learn · XGBoost · SHAP · optbinning*
 
 A credit-risk model that estimates probability of default and translates it into an expected-loss framework.
@@ -117,11 +117,24 @@ A credit-risk model that estimates probability of default and translates it into
 - Benchmarked against a gradient-boosted model (**XGBoost**) with **SHAP** for explainability.
 - Combined **PD, LGD, and EAD** into a full **expected-loss** framework, with a model-validation writeup covering discrimination and calibration.
 
-🔗 **[View Project →](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/blob/main/Credit%20Default%20Scorecard%20and%20Expected%20Loss%20Model/README.md)**
+**[View Project →](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/blob/main/Credit%20Default%20Scorecard%20and%20Expected%20Loss%20Model/README.md)**
 
 ---
 
-### DiT Super-Resolution — Diffusion Transformer
+### How LEGO Grew: An Interactive Data Story
+*Tableau Public*
+
+A published, interactive Tableau data story tracing how LEGO sets, colors, and themes evolved across seven decades, built entirely in LEGO's own brick colors.
+
+- Modeled nine Rebrickable catalog tables in Tableau using relationships, with correctness filters (inventory versioning, spare-part exclusion) that keep the trend lines honest.
+- Built **ten linked worksheets** across five narrative chapters, driven by a **Pick a Decade** parameter, with every color mapped to its true LEGO hex value.
+- Tied the visual findings to a documented business turning point: the palette and complexity peak aligns with LEGO's early-2000s over-expansion and the 2004 return to the core brick.
+
+**[Live Dashboard →](https://public.tableau.com/app/profile/jianyu.jia1246/viz/HowLEGOGrew/LEGODASHBOARD)** · **[View Project →](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/LEGO%20Through%20the%20Decades)**
+
+---
+
+### DiT Super-Resolution: Diffusion Transformer
 *Python · PyTorch*
 
 Implemented and trained a **Diffusion Transformer (DiT)** architecture for image super-resolution.
@@ -130,7 +143,7 @@ Implemented and trained a **Diffusion Transformer (DiT)** architecture for image
 - Handled model training and optimization end-to-end in **PyTorch**.
 - Evaluated generated-output quality and overall model performance.
 
-🔗 **[View Project →](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/dit-super-resolution)**
+**[View Project →](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/dit-super-resolution)**
 
 ---
 
@@ -143,7 +156,7 @@ A healthcare analytics database supporting operational analysis for a hospital n
 - Implemented data validation and integrity checks across the pipeline.
 - Ran **bed-volume and utilization-rate** analysis, delivering operational insights on patient flow and data-driven recommendations for hospital leadership.
 
-🔗 **[View Project →](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Hospital-Nursing-Intervention-Pilot)**
+**[View Project →](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Hospital-Nursing-Intervention-Pilot)**
 
 ---
 
@@ -151,18 +164,18 @@ A healthcare analytics database supporting operational analysis for a hospital n
 
 Some professional analytics work can't be shared publicly due to confidentiality agreements. These are summarized at a high level.
 
-- **EV Charging Analytics — YVR Airport** — Infrastructure analytics on sensor and operational data to identify efficiency patterns and detect system failures across a large charger network.
-- **HPV Campaign Cross-Market Analytics** — Multi-source marketing analytics integrating campaign data to evaluate advertising performance across markets and generate automated reporting metrics.
+- **EV Charging Analytics (YVR Airport).** Infrastructure analytics on sensor and operational data to identify efficiency patterns and detect system failures across a large charger network.
+- **HPV Campaign Cross-Market Analytics.** Multi-source marketing analytics integrating campaign data to evaluate advertising performance across markets and generate automated reporting metrics.
 
 ---
 
 ## Education
 
-**Northeastern University** — *Master of Professional Studies in Analytics (Applied Machine Intelligence)*  
-GPA 3.80 · Sep 2024 – May 2026 · Vancouver, BC
+**Northeastern University**, *Master of Professional Studies in Analytics (Applied Machine Intelligence)*  
+GPA 3.80 · Sep 2024 to May 2026 · Vancouver, BC
 
-**University of Nebraska–Lincoln** — *B.S. in Business Administration, Finance &amp; Actuarial Science*  
-Aug 2018 – Dec 2022 · Lincoln, NE
+**University of Nebraska-Lincoln**, *B.S. in Business Administration, Finance & Actuarial Science*  
+Aug 2018 to Dec 2022 · Lincoln, NE
 
 ---
 
