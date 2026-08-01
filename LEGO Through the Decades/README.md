@@ -7,7 +7,7 @@
 
 > ### [**Explore the live, interactive dashboard on Tableau Public →**](https://public.tableau.com/app/profile/jianyu.jia1246/viz/HowLEGOGrew/LEGODASHBOARD)
 
-<!--
+
   ADD A SCREENSHOT: export a full-dashboard image from Tableau Public
   (Download > Image), save it as images/dashboard.png in this folder,
   then delete these comment lines to switch the preview on.
@@ -15,7 +15,7 @@
 [![How LEGO Grew Up dashboard](images/dashboard.png)](https://public.tableau.com/app/profile/jianyu.jia1246/viz/HowLEGOGrew/LEGODASHBOARD)
 
 <sub>Click the image to open the live, interactive version on Tableau Public.</sub>
--->
+
 
 ---
 
