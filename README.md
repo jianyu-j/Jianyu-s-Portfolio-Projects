@@ -30,7 +30,7 @@ This repository collects selected portfolio projects across **healthcare, infras
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 **Languages &amp; Query**  
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
@@ -64,7 +64,7 @@ This repository collects selected portfolio projects across **healthcare, infras
 
 ---
 
-## 📂 Portfolio Overview
+## Portfolio Overview
 
 | Project | Domain | Stack | What It Delivers |
 |---|---|---|---|
@@ -80,7 +80,7 @@ This repository collects selected portfolio projects across **healthcare, infras
 
 ---
 
-## ⭐ Featured Projects
+## Featured Projects
 
 ### Steeves &amp; Associates — AI Business Intelligence Platform
 *Next.js · Flask · PostgreSQL · Python · Scikit-learn · Statsmodels*
@@ -147,7 +147,7 @@ A healthcare analytics database supporting operational analysis for a hospital n
 
 ---
 
-## 🔒 Selected Professional Work (Under NDA)
+## Selected Professional Work (Under NDA)
 
 Some professional analytics work can't be shared publicly due to confidentiality agreements. These are summarized at a high level.
 
@@ -156,7 +156,7 @@ Some professional analytics work can't be shared publicly due to confidentiality
 
 ---
 
-## 🎓 Education
+## Education
 
 **Northeastern University** — *Master of Professional Studies in Analytics (Applied Machine Intelligence)*  
 GPA 3.80 · Sep 2024 – May 2026 · Vancouver, BC
