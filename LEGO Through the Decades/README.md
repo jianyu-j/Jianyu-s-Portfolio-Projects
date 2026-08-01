@@ -1,11 +1,11 @@
-# 🧱 How LEGO Grew
+# How LEGO Grew
 ### An interactive data story: LEGO through the decades
 
 ![Tableau](https://img.shields.io/badge/Tableau-E97627?style=flat-square&logo=tableau&logoColor=white)
 ![Data Visualization](https://img.shields.io/badge/Data%20Visualization-1F77B4?style=flat-square)
 ![Status](https://img.shields.io/badge/status-published-brightgreen?style=flat-square)
 
-> ### 🔴 [**Explore the live, interactive dashboard on Tableau Public →**](https://public.tableau.com/app/profile/jianyu.jia1246/viz/HowLEGOGrew/LEGODASHBOARD)
+> ### [**Explore the live, interactive dashboard on Tableau Public →**](https://public.tableau.com/app/profile/jianyu.jia1246/viz/HowLEGOGrew/LEGODASHBOARD)
 
 <!--
   ADD A SCREENSHOT: export a full-dashboard image from Tableau Public
