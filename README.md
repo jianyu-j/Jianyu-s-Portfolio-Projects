@@ -30,6 +30,33 @@ This repository collects selected portfolio projects across **healthcare, infras
 
 ---
 
+## How I Work
+
+I came to data science from actuarial science and finance. That background shows up less as insurance math and more as a disposition: state your assumptions, be honest about what you don't know, and remember the model is not the world. Most of my projects follow the same path.
+
+**Ask whether this needs a model at all.**  
+The first question is whether the problem calls for a prediction or an explanation. If nobody needs a specific predicted outcome, I don't reach for ML. The LEGO project is a historical account of how a catalog changed over seventy years, so it's a Tableau story, not a model. When something genuinely has to be predicted, that's when ML earns its place.
+
+**Look at the raw data before doing anything to it.**  
+I open the raw files and check whether they make sense: do the row counts, ranges, and relationships match what the domain says they should? On the LEGO catalog that's where I found sets carry multiple inventory versions, which would have silently double-counted every part in the analysis. Catching a structural problem at this stage is cheap. Catching it after ten dashboards are built is not.
+
+**Expect most of the work to be getting the data right.**  
+This is realistically where the time goes, and on self-directed projects, finding usable data at all is the hardest part. Some questions I'd like to answer don't have data behind them. I'd rather say a question can't be answered well than produce a confident answer with nothing underneath it.
+
+**Run EDA in a fixed order.**  
+Distributions first, to see what's skewed and what needs transforming. Then relationships and correlation. Then outliers, where I switch to interactive plots on large datasets so I can hover a suspicious point and see the record behind it. Throughout, I'm hunting the things that quietly break models later: leakage, structural duplication, and who never made it into the dataset at all.
+
+**Spend the time on features, not on model shopping.**  
+Feature selection is where I get the most return, and it's where domain judgment matters most: what would actually have been knowable at decision time, and what is quietly encoding the answer. On the credit scorecard that meant restricting to what a lender sees at application and splitting on time rather than randomly.
+
+**Make the complex model compete with a simple one.**  
+I start interpretable. A weight-of-evidence scorecard a risk officer can read and sign off on often beats a black box nobody will approve.
+
+**Say what the model can't do.**  
+Models are fit to conditions that held in the past. Black swan events sit outside anything the training data contains, and no amount of tuning fixes that. So I state limitations plainly: where a result is directional rather than precise, where the data was thin, and what would change my mind. A prediction is one input to a decision, not the decision itself.
+
+---
+
 ## Tech Stack
 
 **Languages & Query**  
