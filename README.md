@@ -76,7 +76,7 @@ This repository collects selected portfolio projects across **healthcare, infras
 | **[Stock Direction Prediction](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Stock%20Direction%20Prediction)** | ML · Financial Markets | Python, Scikit-learn | Classification model predicting stock price direction |
 | **Tennis Player Evaluation System** *(in progress)* | ML · Sports Analytics | Python, Pandas, Scikit-learn | Model evaluating player performance &amp; match outcomes |
 | **Vancouver Housing Investment Analysis** *(in progress)* | Geospatial · Investment Analytics | Python, GeoPandas, Power BI, StatCan | Power BI map ranking Vancouver areas by land value &amp; demographics |
-| **[LEGO Through the Decades](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/LEGO%20Through%20the%20Decades)** *(in progress)* | EDA · Data Visualization · Storytelling | Tableau | Interactive Tableau dashboard tracing how LEGO sets, colors, and themes evolved over 70+ years |
+| **[How LEGO Grew](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/LEGO%20Through%20the%20Decades)** | Data Visualization · EDA · Storytelling | Tableau | Interactive data story on how LEGO sets, colors, and themes evolved over 70+ years · **[▶ Live Dashboard](https://public.tableau.com/app/profile/jianyu.jia1246/viz/HowLEGOGrew/LEGODASHBOARD)** |
 
 ---
 
