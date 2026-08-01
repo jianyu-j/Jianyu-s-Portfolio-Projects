@@ -5,17 +5,9 @@
 ![Data Visualization](https://img.shields.io/badge/Data%20Visualization-1F77B4?style=flat-square)
 ![Status](https://img.shields.io/badge/status-published-brightgreen?style=flat-square)
 
-> ### [**Explore the live, interactive dashboard on Tableau Public →**](https://public.tableau.com/app/profile/jianyu.jia1246/viz/HowLEGOGrew/LEGODASHBOARD)
+[![How LEGO Grew dashboard](LEGO%20DASHBOARD.png)](https://public.tableau.com/app/profile/jianyu.jia1246/viz/HowLEGOGrew/LEGODASHBOARD)
 
-
-  ADD A SCREENSHOT: export a full-dashboard image from Tableau Public
-  (Download > Image), save it as images/dashboard.png in this folder,
-  then delete these comment lines to switch the preview on.
-
-[![How LEGO Grew Up dashboard](images/dashboard.png)](https://public.tableau.com/app/profile/jianyu.jia1246/viz/HowLEGOGrew/LEGODASHBOARD)
-
-<sub>Click the image to open the live, interactive version on Tableau Public.</sub>
-
+> ### [**Explore the live, interactive version on Tableau Public →**](https://public.tableau.com/app/profile/jianyu.jia1246/viz/HowLEGOGrew/LEGODASHBOARD)
 
 ---
 
@@ -25,11 +17,11 @@ Every LEGO set has a signature: the mix of parts it uses and the colors those pa
 
 The spine is simple: **LEGO grew up.** It went from a handful of primary-colored bricks into a sprawling, licensed universe of thousands of parts, hundreds of colors, and dozens of worlds. The dashboard traces that journey in five chapters:
 
-- **Bigger** : sets get larger and more complex over the decades
-- **More Colorful** : the palette expands from a few colors to hundreds
-- **More Worlds** : themes rise and fall, and licensing reshapes the catalog
-- **More Characters** : the minifigure grows into a category of its own
-- **The Building Blocks** : the underlying vocabulary of parts every set is built from
+- **Bigger.** Sets get larger and more complex over the decades.
+- **More Colorful.** The palette expands from a few colors to hundreds.
+- **More Worlds.** Themes rise and fall, and licensing reshapes the catalog.
+- **More Characters.** The minifigure grows into a category of its own.
+- **The Building Blocks.** The underlying vocabulary of parts every set is built from.
 
 It closes with a **Big Picture** synthesis that ties the visual trends back to a real moment in LEGO's business history.
 
@@ -110,9 +102,8 @@ The whole piece is styled in LEGO's own brick colors, pulled directly from the h
 
 ## Repository contents
 
-- `README.md` : this file
-- `How LEGO Grew Up.twbx` : the packaged Tableau workbook, committed so it is downloadable and openable in the free [Tableau Reader](https://www.tableau.com/products/reader)
-- `images/` : dashboard screenshots
+- `README.md`, this file
+- `LEGO DASHBOARD.png`, a still of the full dashboard. The live, interactive version is on [Tableau Public](https://public.tableau.com/app/profile/jianyu.jia1246/viz/HowLEGOGrew/LEGODASHBOARD).
 
 ---
 
@@ -125,5 +116,5 @@ The whole piece is styled in LEGO's own brick colors, pulled directly from the h
 
 ## Author
 
-**Jianyu Jia** · Data Scientist, Vancouver, BC
+**Jianyu Jia** · Data Scientist, Vancouver, BC  
 [Portfolio](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects) · [Tableau Public](https://public.tableau.com/app/profile/jianyu.jia1246)
