@@ -1,4 +1,4 @@
-# 🧱 How LEGO Grew Up
+# 🧱 How LEGO Grew
 ### An interactive data story: LEGO through the decades
 
 ![Tableau](https://img.shields.io/badge/Tableau-E97627?style=flat-square&logo=tableau&logoColor=white)
