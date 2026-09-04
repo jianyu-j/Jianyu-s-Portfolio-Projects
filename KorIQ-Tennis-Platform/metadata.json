@@ -1,0 +1,5 @@
+{
+  "name": "KorIQ",
+  "description": "A progressive web app for tennis coaching evaluation using NTRP-based scoring, radar charts, and progress tracking.",
+  "requestFramePermissions": []
+}

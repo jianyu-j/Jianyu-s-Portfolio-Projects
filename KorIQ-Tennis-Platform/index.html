@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KorIQ — Tennis Performance Platform</title>
+    <meta name="description" content="KorIQ: tennis coaching, NTRP-based evaluation, and club management" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              tennis: {
+                50: '#f3fbf4',
+                100: '#e1f5e4',
+                200: '#c3ebca',
+                300: '#95db9f',
+                400: '#5fc370',
+                500: '#3aa54e',
+                600: '#2e7d32', // Primary Brand Color
+                700: '#27632b',
+                800: '#234f26',
+                900: '#1d4121',
+              },
+              // Community Tab Accent Colors
+              'courts': '#3B82F6',      // Blue
+              'coaches': '#22C55E',     // Green
+              'clubs': '#0D9488',       // Teal
+              'players': '#F97316',     // Orange
+              'ballpark': '#8B5CF6',    // Purple
+              'matchup': '#0EA5E9',     // Sky Blue
+              // Portal Accent Colors
+              'portal-player': '#F97316',   // Orange
+              'portal-coach': '#22C55E',    // Green
+              'portal-club': '#0D9488',     // Teal
+              'portal-student': '#3B82F6',  // Blue
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      /* Custom scrollbar for better mobile feel */
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #ccc;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #2e7d32;
+      }
+      /* Hide scrollbar for tab navigation */
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "recharts": "https://esm.sh/recharts@^3.6.0",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react-router-dom": "https://esm.sh/react-router-dom@^7.12.0"
+  }
+}
+</script>
+</head>
+  <body class="bg-gray-50 text-gray-900">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          // In a real build, we'd register a sw.js here
+          console.log('Service Worker supported');
+        });
+      }
+    </script>
+  </body>
+</html>

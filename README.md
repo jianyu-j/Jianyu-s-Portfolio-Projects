@@ -102,7 +102,7 @@ Models are fit to conditions that held in the past. Black swan events sit outsid
 | **[DiT Super-Resolution](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/dit-super-resolution)** | Deep Learning · Generative Models | Python, PyTorch | Trained a diffusion transformer for image super-resolution |
 | **[Hospital Nursing Intervention Pilot](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Hospital-Nursing-Intervention-Pilot)** | Healthcare Analytics · Data Modeling | MySQL, SQL, MySQL Workbench | Star-schema database (ERD, fact and dimension tables) with SQL analysis of hospital bed utilization |
 | **[Stock Direction Prediction](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Stock%20Direction%20Prediction)** | ML · Financial Markets | Python, Scikit-learn | Classification model predicting stock price direction |
-| **CourtIQ Tennis Platform** *(in progress)* | Full-Stack · Computer Vision · Product Analytics | React, Tailwind, Supabase, PostgreSQL, Python | Five-portal platform for players, coaches, and clubs, with a video-based self-rating feature built on pose estimation and ball tracking |
+| **[KorIQ Tennis Platform](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/KorIQ-Tennis-Platform)** *(prototype)* | Product Design · Front-End · Business Analytics | React, TypeScript, Vite, Recharts, Tailwind | Interactive front-end prototype of a player / student / coach / club platform with an NTRP-weighted evaluation engine and club revenue analytics · **[Live Demo](https://jianyu-j.github.io/Jianyu-s-Portfolio-Projects/KorIQ-Tennis-Platform/demo/)** |
 | **Vancouver Housing Investment Analysis** *(in progress)* | Geospatial · Investment Analytics | Python, GeoPandas, Power BI, StatCan | Power BI map ranking Vancouver areas by land value & demographics |
 
 ---
@@ -187,16 +187,18 @@ A healthcare analytics database supporting operational analysis of a nursing-int
 
 ---
 
-### CourtIQ Tennis Platform *(in progress)*
-*React · Tailwind · Supabase · PostgreSQL · Python · MediaPipe · TrackNet*
+### KorIQ Tennis Platform *(prototype)*
+*React · TypeScript · Vite · Recharts · Tailwind*
 
-A platform connecting players, coaches, and clubs, where a computer vision model lets players upload match video and rate their own performance.
+A working front-end prototype of a platform connecting tennis players, students, coaches, and clubs, built to think through the product and data-modelling problems before committing to a backend. Everything runs in the browser against seeded mock data, so the full app can be explored from the live demo.
 
-- Gathered functional requirements, built the **React frontend across five portals**, and designed the **PostgreSQL schema in Supabase**, covering the full cycle from requirement to build to testing.
-- Built the self-rating feature on two models: **MediaPipe Pose** for player body-joint tracking and **TrackNet** for ball tracking, combined into stroke and movement metrics surfaced on the player tab.
-- Specified the Revenue module (CSV payment import with automatic student creation) and the analytics roadmap covering lifetime value, churn risk, coach profitability, and revenue forecasting.
+- Designed an **NTRP-based evaluation engine** that scores stroke fundamentals and level-specific performance criteria on one comparable 0–100 scale, with weights that shift from fundamentals-heavy for beginners (70/30) to performance-only for advanced players.
+- Built **four role-based portals** (Player, Student, Coach, Club) plus a public community layer, covering evaluations, lesson booking, a tutorial marketplace, partner matching, and club events.
+- Implemented the **club business-intelligence layer**: student churn and lifetime value, coach revenue and retention impact, revenue by time / level, concentration risk, break-even, and auto-generated insights, all visualised with Recharts.
 
-**Known limitation:** the vision model is constrained by a small training video set, so ratings are directional rather than precise. Expanding the video corpus is the next step.
+**Scope note:** this is a prototype. Auth, payment integrations (Stripe / Square / PayPal), and the in-app assistant are simulated, and persistence is `localStorage`. A separate computer-vision self-rating feature (MediaPipe Pose + TrackNet on match video) is in early development and is not part of this codebase.
+
+**[Live Demo →](https://jianyu-j.github.io/Jianyu-s-Portfolio-Projects/KorIQ-Tennis-Platform/demo/)** · **[View Project →](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/KorIQ-Tennis-Platform)**
 
 ---
 
