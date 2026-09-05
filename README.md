@@ -26,7 +26,7 @@ I'm a data scientist with roots in **finance and actuarial science** who turns c
 
 I recently completed a **Master of Professional Studies in Analytics (Applied Machine Intelligence)** at Northeastern University, building on a background in actuarial science and finance from the University of Nebraska-Lincoln. Alongside my project work, I serve as **Partnership Lead at Data for Good Vancouver**, where I translate stakeholder needs into structured, deliverable data initiatives for nonprofit partners.
 
-This repository collects selected portfolio projects across **healthcare, infrastructure & operations, credit risk, financial markets, applied deep learning, and data storytelling.**
+This repository collects selected portfolio projects across **healthcare, infrastructure & operations, credit risk, financial markets, applied deep learning, sports analytics, and data storytelling.**
 
 ---
 
@@ -48,6 +48,9 @@ Distributions first, to see what's skewed and what needs transforming. Then rela
 
 **Spend the time on features, not on model shopping.**  
 Feature selection is where I get the most return, and it's where domain judgment matters most: what would actually have been knowable at decision time, and what is quietly encoding the answer. On the credit scorecard that meant restricting to what a lender sees at application and splitting on time rather than randomly.
+
+**Design the validation to be able to fail.**  
+A split that can't embarrass the model isn't a test. On the tennis evaluation model, a random split looked fine and leave-one-video-out put accuracy below chance, which is how I found out the features had learned the camera rather than the tennis. I'd rather run the split that can break the result than the one that flatters it.
 
 **Make the complex model compete with a simple one.**  
 I start interpretable. A weight-of-evidence scorecard a risk officer can read and sign off on often beats a black box nobody will approve.
@@ -72,7 +75,13 @@ Models are fit to conditions that held in the past. Black swan events sit outsid
 ![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=flat-square&logo=pytorch&logoColor=white)
 ![SciPy](https://img.shields.io/badge/SciPy-8CAAE6?style=flat-square&logo=scipy&logoColor=white)
 ![Statsmodels](https://img.shields.io/badge/Statsmodels-3D6DB3?style=flat-square)
+![XGBoost](https://img.shields.io/badge/XGBoost-337AB7?style=flat-square)
+![LightGBM](https://img.shields.io/badge/LightGBM-9ACD32?style=flat-square)
 ![MLflow](https://img.shields.io/badge/MLflow-0194E2?style=flat-square&logo=mlflow&logoColor=white)
+
+**Computer Vision**  
+![OpenCV](https://img.shields.io/badge/OpenCV-5C3EE8?style=flat-square&logo=opencv&logoColor=white)
+![MediaPipe](https://img.shields.io/badge/MediaPipe-0097A7?style=flat-square&logo=google&logoColor=white)
 
 **Visualization & BI**  
 ![Matplotlib](https://img.shields.io/badge/Matplotlib-11557C?style=flat-square)
@@ -103,6 +112,7 @@ Models are fit to conditions that held in the past. Black swan events sit outsid
 | **[Hospital Nursing Intervention Pilot](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Hospital-Nursing-Intervention-Pilot)** | Healthcare Analytics · Data Modeling | MySQL, SQL, MySQL Workbench | Star-schema database (ERD, fact and dimension tables) with SQL analysis of hospital bed utilization |
 | **[Stock Direction Prediction](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Stock%20Direction%20Prediction)** | ML · Financial Markets | Python, Scikit-learn | Classification model predicting stock price direction |
 | **[KorIQ Tennis Platform](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/KorIQ-Tennis-Platform)** *(prototype)* | Product Design · Full-Stack · SQL Analytics | React, TypeScript, Vite, Supabase (Postgres, RLS), Recharts, Tailwind | Player / student / coach / club platform with an NTRP-weighted evaluation engine scored in Postgres, row-level security per role, and SQL-view analytics · **[Live Demo](https://jianyu-j.github.io/Jianyu-s-Portfolio-Projects/KorIQ-Tennis-Platform/demo/)** |
+| **[KorIQ Student Level Evaluation Model](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/KorIQ-Student-Level-Evaluation-Model)** *(in progress)* | Computer Vision · Sports Analytics · Model Validation | Python, TrackNet V3, MediaPipe Pose, OpenCV, Scikit-learn, XGBoost, LightGBM, SHAP | Rating a player's NTRP level from match video: ball and pose tracking, camera-invariant trajectory features, leave-one-video-out validation against dummy baselines |
 | **Vancouver Housing Investment Analysis** *(in progress)* | Geospatial · Investment Analytics | Python, GeoPandas, Power BI, StatCan | Power BI map ranking Vancouver areas by land value & demographics |
 
 ---
@@ -197,9 +207,25 @@ A prototype of a platform connecting tennis players, students, coaches, and club
 - Built the analytics as **SQL views** (per-student progress with window functions, coach impact, monthly evaluation volume, level benchmarks) and rendered them in the club portal with Recharts alongside the broader **business-intelligence layer** (churn, lifetime value, coach revenue and retention, concentration risk, break-even).
 - Built **four role-based portals** (Player, Student, Coach, Club) plus a public community layer, covering evaluations, lesson booking, a tutorial marketplace, partner matching, and club events.
 
-**Scope note:** payments (Stripe / Square / PayPal), messaging, bookings, and the in-app assistant are simulated in the browser. The demo database is shared, so anything entered there is visible to other visitors. A separate computer-vision self-rating feature (MediaPipe Pose + TrackNet on match video) is in early development and is not part of this codebase.
+**Scope note:** payments (Stripe / Square / PayPal), messaging, bookings, and the in-app assistant are simulated in the browser. The demo database is shared, so anything entered there is visible to other visitors. The computer-vision self-rating model is a separate project, below.
 
 **[Live Demo →](https://jianyu-j.github.io/Jianyu-s-Portfolio-Projects/KorIQ-Tennis-Platform/demo/)** · **[View Project →](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/KorIQ-Tennis-Platform)**
+
+---
+
+### KorIQ Student Level Evaluation Model *(in progress)*
+*Python · TrackNet V3 · MediaPipe Pose · OpenCV · Scikit-learn · XGBoost · LightGBM · SHAP*
+
+The modelling half of KorIQ, kept as its own project. The platform's evaluation engine depends on a certified coach scoring a student by hand, which is accurate and does not scale. This asks whether a few minutes of match video can recover a player's NTRP tier without a coach in the loop, from the geometry and rhythm of the ball rather than from human judgement. It is intended to become a provisional first-pass rating inside the platform, but it lives separately because the work here is feature design and validation, not application code.
+
+- Built the full pipeline on a resumable Kaggle GPU notebook: `yt-dlp` acquisition of **19 rated matches (NTRP 2.0 to 5.0)**, `ffmpeg` normalisation to 720p/30fps, **TrackNet V3** for per-frame ball tracking, **MediaPipe Pose** for two-player landmark extraction, then windowed feature extraction and grouped cross-validation. Every stage checkpoints and skips completed work, because TrackNet inference alone runs roughly 15 GPU-hours against a 12-hour session limit.
+- **Found the failure that matters.** The first feature set used pixel positions and pixel-scale speeds. Under a random split it looked usable; under **leave-one-video-out** it scored **0.03 to 0.10 accuracy against a 0.33 chance rate, with Cohen's kappa between -0.54 and -0.38**. Reliably worse than guessing is not overfitting, it is a model that has learned something systematically wrong: the features had encoded camera angle, court colour and zoom, so each video formed its own cluster and every held-out video got mapped to a neighbour from a different tier.
+- **Rebuilt the features to be camera-invariant.** Fifteen unitless features (coefficients of variation, trajectory and turn-angle entropy, direction persistence, PCA shape of the rally), each computed on a window centred on its own mean and divided by its own spatial standard deviation, with an adaptive percentile gate replacing fixed pixel thresholds. Court homography was attempted and deliberately dropped: Hough-line detection succeeded on only 2 of 6 videos, and making the features not need a court frame was more robust than estimating one badly.
+- **Rebuilt the evaluation to be able to fail.** `LeaveOneGroupOut` by video, `DummyClassifier` baselines reported next to every model, window-level and video-level metrics (majority vote and mean predicted probability), out-of-fold predictions written to CSV for audit, an automatic warning when lift over the best dummy is under five points, and a binary beginner-versus-advanced experiment as the minimum test for signal.
+
+**Documented limitations:** labels are self-reported by video uploaders and assigned at match level rather than player level, so the model currently rates rallies rather than people; pose landmarks are extracted but not yet in the feature set; 19 videos is a small N. Per-player attribution and pose-derived features are the next milestones, and results will be published as they come out rather than as they flatter.
+
+**[View Project →](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/KorIQ-Student-Level-Evaluation-Model)**
 
 ---
 
