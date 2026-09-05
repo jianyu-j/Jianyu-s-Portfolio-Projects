@@ -3,6 +3,7 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { HashRouter, Routes, Route, Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { Coach, Student, NtrpLevel, Session, User, UserRole, Club, CoachRating } from './types';
 import { storageService } from './services/storageService';
+import { authService } from './services/authService';
 import { AddEvaluation } from './components/CoachPortal/AddEvaluation';
 import { StudentDashboard } from './components/StudentPortal/StudentDashboard';
 import { CoachStudentView } from './components/CoachPortal/CoachStudentView';
@@ -1570,6 +1571,28 @@ const AppContent = () => {
     const [authMode, setAuthMode] = useState<'LOGIN' | 'SIGNUP'>('LOGIN');
     const [targetRole, setTargetRole] = useState<UserRole | undefined>(undefined);
     const [showOnboarding, setShowOnboarding] = useState(false);
+    // Supabase mode: load the public directory and restore a persisted session
+    // before rendering anything that reads from the data cache.
+    const [booting, setBooting] = useState(authService.remote);
+    const [bootError, setBootError] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (!authService.remote) return;
+        let cancelled = false;
+        (async () => {
+            try {
+                await storageService.hydratePublic();
+                const restored = await authService.restoreSession();
+                if (!cancelled && restored) setUser(restored);
+            } catch (err) {
+                console.error('[App] bootstrap failed', err);
+                if (!cancelled) setBootError(err instanceof Error ? err.message : 'Could not reach the database.');
+            } finally {
+                if (!cancelled) setBooting(false);
+            }
+        })();
+        return () => { cancelled = true; };
+    }, []);
 
     const handleLoginSuccess = (u: User) => {
         setUser(u);
@@ -1604,6 +1627,7 @@ const AppContent = () => {
         setUser(null);
         setShowOnboarding(false);
         navigate('/');
+        authService.logout().catch(err => console.error('[App] logout failed', err));
     };
 
     const openAuth = (mode: 'LOGIN' | 'SIGNUP', role?: UserRole) => {
@@ -1624,8 +1648,24 @@ const AppContent = () => {
         }
     };
 
+    if (booting) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
+                <div className="text-center">
+                    <div className="w-10 h-10 border-4 border-tennis-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+                    <p className="text-sm text-gray-300">Connecting to KorIQ…</p>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <ErrorBoundary>
+            {bootError && (
+                <div className="fixed top-0 inset-x-0 z-[60] bg-red-600 text-white text-xs text-center py-2 px-4">
+                    Database unavailable: {bootError}. Some data may not load.
+                </div>
+            )}
             <AuthModal
                 isOpen={isAuthModalOpen}
                 onClose={() => setIsAuthModalOpen(false)}

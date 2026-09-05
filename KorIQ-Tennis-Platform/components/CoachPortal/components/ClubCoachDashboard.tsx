@@ -153,7 +153,7 @@ const ClubCoachDashboard: React.FC<ClubCoachDashboardProps> = ({ coach, ratings,
             <div className="w-full md:max-w-3xl mx-auto p-4 md:p-8 min-h-screen bg-gray-50">
                 <Button variant="ghost" onClick={() => setView('profile')} className="mb-4">← Cancel Evaluation</Button>
                 <h2 className="text-xl font-bold mb-4">New Evaluation for {selectedStudent.name}</h2>
-                <AddEvaluation student={selectedStudent} onComplete={() => setView('profile')} />
+                <AddEvaluation student={selectedStudent} coach={coach} onComplete={() => { refreshData(); setView('profile'); }} />
             </div>
         );
     }

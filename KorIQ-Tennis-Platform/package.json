@@ -7,9 +7,11 @@
     "dev": "vite",
     "build": "vite build",
     "build:demo": "vite build --base=/Jianyu-s-Portfolio-Projects/KorIQ-Tennis-Platform/demo/ --outDir demo --emptyOutDir",
+    "db:seed:generate": "node scripts/generate-seed.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.115.0",
     "lucide-react": "^0.563.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",

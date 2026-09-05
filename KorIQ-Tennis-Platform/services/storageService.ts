@@ -1,7 +1,13 @@
 import { Student, Session, Coach, NtrpLevel, PhysicalLogEntry, User, UserRole, Club, CoachRating, StrokeType, RevenueEntry, ExpenseEntry, ClubSessionPeriod, Player } from '../types';
+import { isSupabaseEnabled } from './supabaseClient';
+import { remoteAuth, remoteData, ProfileRow, RemoteSnapshot } from './remoteDataService';
 
-// --- IMPORT MOCK DATA FROM SEPARATE FILES ---
-// When deployed with a real backend, replace these imports with API calls
+// --- DATA SOURCES ---
+// Clubs, coaches, students, players and evaluations ("sessions") live in
+// Supabase when VITE_SUPABASE_URL is configured: this service keeps an
+// in-memory cache hydrated from Postgres (filtered by row-level security) and
+// forwards writes. Everything else, and everything when offline, uses the
+// localStorage mock database seeded from data/mockData.
 import {
     CLUB_ID,
     MOCK_CLUBS,
@@ -38,9 +44,57 @@ class StorageService {
     private expenses: ExpenseEntry[] = [];
     private clubSessions: ClubSessionPeriod[] = [];
     private onboardingStatus: OnboardingRecord = {};
+    /** Auth profiles of the signed-in user (Supabase mode only). */
+    private profiles: ProfileRow[] = [];
+
+    /** True when the slice collections are backed by Supabase. */
+    readonly remote = isSupabaseEnabled;
 
     constructor() {
         this.loadData();
+    }
+
+    // --- Remote hydration (Supabase mode) ---
+
+    /** Load what an anonymous visitor may see (club directory). */
+    async hydratePublic(): Promise<void> {
+        if (!this.remote) return;
+        const { clubs } = await remoteData.fetchPublic();
+        this.clubs = clubs;
+    }
+
+    /** Load everything the signed-in user may see, plus their profiles. */
+    async hydrate(): Promise<void> {
+        if (!this.remote) return;
+        const [snapshot, profiles] = await Promise.all([remoteData.fetchAll(), remoteAuth.profiles()]);
+        this.applySnapshot(snapshot);
+        this.profiles = profiles;
+    }
+
+    private applySnapshot(s: RemoteSnapshot) {
+        this.clubs = s.clubs;
+        this.coaches = s.coaches;
+        this.students = s.students;
+        this.players = s.players;
+        this.sessions = s.sessions;
+    }
+
+    /** Forget remote data on logout (keeps the anonymous club directory). */
+    clearRemote() {
+        if (!this.remote) return;
+        this.coaches = [];
+        this.students = [];
+        this.players = [];
+        this.sessions = [];
+        this.profiles = [];
+    }
+
+    getProfiles(): ProfileRow[] {
+        return this.profiles;
+    }
+
+    private logRemoteError(action: string) {
+        return (err: unknown) => console.error(`[storageService] ${action} failed to sync to Supabase:`, err);
     }
 
     private loadData() {
@@ -57,12 +111,22 @@ class StorageService {
         const storedClubSessions = localStorage.getItem('korIQ_clubSessions');
         const storedOnboarding = localStorage.getItem('korIQ_onboarding');
 
-        this.students = storedStudents ? JSON.parse(storedStudents) : MOCK_STUDENTS;
-        this.players = storedPlayers ? JSON.parse(storedPlayers) : MOCK_PLAYERS;
-        this.sessions = storedSessions ? JSON.parse(storedSessions) : MOCK_SESSIONS;
-        this.users = storedUsers ? JSON.parse(storedUsers) : MOCK_USERS;
-        this.coaches = storedCoaches ? JSON.parse(storedCoaches) : MOCK_COACHES;
-        this.clubs = storedClubs ? JSON.parse(storedClubs) : MOCK_CLUBS;
+        if (this.remote) {
+            // Slice collections come from Supabase via hydrate(); start empty.
+            this.students = [];
+            this.players = [];
+            this.sessions = [];
+            this.users = [];
+            this.coaches = [];
+            this.clubs = [];
+        } else {
+            this.students = storedStudents ? JSON.parse(storedStudents) : MOCK_STUDENTS;
+            this.players = storedPlayers ? JSON.parse(storedPlayers) : MOCK_PLAYERS;
+            this.sessions = storedSessions ? JSON.parse(storedSessions) : MOCK_SESSIONS;
+            this.users = storedUsers ? JSON.parse(storedUsers) : MOCK_USERS;
+            this.coaches = storedCoaches ? JSON.parse(storedCoaches) : MOCK_COACHES;
+            this.clubs = storedClubs ? JSON.parse(storedClubs) : MOCK_CLUBS;
+        }
         this.physicalLogs = storedPhysicalLogs ? JSON.parse(storedPhysicalLogs) : [];
         this.ratings = storedRatings ? JSON.parse(storedRatings) : MOCK_RATINGS;
         this.revenue = storedRevenue ? JSON.parse(storedRevenue) : MOCK_REVENUE;
@@ -95,6 +159,11 @@ class StorageService {
     addStudent(student: Student) {
         this.students.push(student);
         this.saveStudents();
+        if (this.remote) {
+            remoteData.insertStudent(student)
+                .then(saved => { this.students = this.students.map(s => s.id === saved.id ? saved : s); })
+                .catch(this.logRemoteError('addStudent'));
+        }
     }
 
     claimStudentProfile(studentId: string): boolean {
@@ -108,6 +177,7 @@ class StorageService {
     }
 
     private saveStudents() {
+        if (this.remote) return;
         localStorage.setItem('korIQ_students', JSON.stringify(this.students));
     }
 
@@ -126,10 +196,11 @@ class StorageService {
     }
 
     private savePlayers() {
+        if (this.remote) return;
         localStorage.setItem('korIQ_players', JSON.stringify(this.players));
     }
 
-    // --- Sessions ---
+    // --- Sessions (evaluations) ---
     getSessions(studentId?: string): Session[] {
         if (studentId) {
             return this.sessions.filter(s => s.studentId === studentId);
@@ -137,12 +208,33 @@ class StorageService {
         return this.sessions;
     }
 
-    addSession(session: Session) {
+    /**
+     * Save an evaluation. In Supabase mode the database computes the averages
+     * and weighted final score, so the returned session is authoritative.
+     */
+    async addSession(session: Session): Promise<Session> {
+        if (this.remote) {
+            const saved = await remoteData.insertEvaluation(session);
+            this.sessions.push(saved);
+            // The database may promote the student when evaluated at a higher level.
+            const student = this.students.find(s => s.id === saved.studentId);
+            if (student && this.compareNtrp(saved.ntrpLevel, student.currentNtrp) > 0) {
+                student.currentNtrp = saved.ntrpLevel;
+            }
+            return saved;
+        }
         this.sessions.push(session);
         this.saveSessions();
+        return session;
+    }
+
+    private compareNtrp(a: NtrpLevel, b: NtrpLevel): number {
+        const order = Object.values(NtrpLevel);
+        return order.indexOf(a) - order.indexOf(b);
     }
 
     private saveSessions() {
+        if (this.remote) return;
         localStorage.setItem('korIQ_sessions', JSON.stringify(this.sessions));
     }
 
@@ -158,14 +250,18 @@ class StorageService {
         // Update student current attributes
         const studentIndex = this.students.findIndex(s => s.id === log.studentId);
         if (studentIndex >= 0) {
-            this.students[studentIndex].physicalAttributes = {
+            const physicalAttributes = {
                 sleepHours: log.sleepHours,
                 hydrationCups: log.hydrationCups,
                 nutritionRating: log.nutritionRating,
                 cardioMinutes: log.cardioMinutes,
                 strengthMinutes: log.strengthMinutes
             };
+            this.students[studentIndex].physicalAttributes = physicalAttributes;
             this.saveStudents();
+            if (this.remote) {
+                remoteData.updateStudent(log.studentId, { physicalAttributes }).catch(this.logRemoteError('addPhysicalLog'));
+            }
         }
     }
 
@@ -203,6 +299,7 @@ class StorageService {
     }
 
     private saveUsers() {
+        if (this.remote) return;
         localStorage.setItem('korIQ_users', JSON.stringify(this.users));
     }
 
@@ -218,6 +315,11 @@ class StorageService {
     addCoach(coach: Coach) {
         this.coaches.push(coach);
         this.saveCoaches();
+        if (this.remote) {
+            remoteData.insertCoach(coach)
+                .then(saved => { this.coaches = this.coaches.map(c => c.id === saved.id ? saved : c); })
+                .catch(this.logRemoteError('addCoach'));
+        }
     }
 
     claimCoachProfile(coachId: string): boolean {
@@ -231,6 +333,7 @@ class StorageService {
     }
 
     private saveCoaches() {
+        if (this.remote) return;
         localStorage.setItem('korIQ_coaches', JSON.stringify(this.coaches));
     }
 
@@ -244,6 +347,7 @@ class StorageService {
     }
 
     private saveClubs() {
+        if (this.remote) return;
         localStorage.setItem('korIQ_clubs', JSON.stringify(this.clubs));
     }
 
@@ -312,27 +416,35 @@ class StorageService {
     }
 
     isOnboardingComplete(role: string, entityId: string): boolean {
+        if (this.remote) {
+            const p = this.profiles.find(p => p.role === role && p.linked_entity_id === entityId);
+            if (p) return p.onboarding_completed_at !== null;
+        }
         const key = this.getOnboardingKey(role, entityId);
         return this.onboardingStatus[key]?.completed || false;
     }
 
     completeOnboarding(role: string, entityId: string) {
-        const key = this.getOnboardingKey(role, entityId);
-        this.onboardingStatus[key] = {
-            completed: true,
-            completedAt: new Date().toISOString()
-        };
-        this.saveOnboarding();
+        this.markOnboarding(role, entityId, false);
     }
 
     skipOnboarding(role: string, entityId: string) {
+        this.markOnboarding(role, entityId, true);
+    }
+
+    private markOnboarding(role: string, entityId: string, skipped: boolean) {
+        const now = new Date().toISOString();
         const key = this.getOnboardingKey(role, entityId);
-        this.onboardingStatus[key] = {
-            completed: true,
-            skipped: true,
-            completedAt: new Date().toISOString()
-        };
+        this.onboardingStatus[key] = { completed: true, skipped, completedAt: now };
         this.saveOnboarding();
+        if (this.remote) {
+            this.profiles = this.profiles.map(p =>
+                p.role === role && p.linked_entity_id === entityId
+                    ? { ...p, onboarding_completed_at: now, onboarding_skipped: skipped }
+                    : p
+            );
+            remoteAuth.completeOnboarding(role as UserRole, skipped).catch(this.logRemoteError('completeOnboarding'));
+        }
     }
 
     private saveOnboarding() {
@@ -343,8 +455,10 @@ class StorageService {
     updatePlayer(playerId: string, updates: Partial<Player>) {
         const index = this.players.findIndex(p => p.id === playerId);
         if (index >= 0) {
-            this.players[index] = { ...this.players[index], ...updates };
+            const current = this.players[index];
+            this.players[index] = { ...current, ...updates };
             this.savePlayers();
+            if (this.remote) remoteData.updatePlayer(playerId, updates, current).catch(this.logRemoteError('updatePlayer'));
             return true;
         }
         return false;
@@ -355,6 +469,7 @@ class StorageService {
         if (index >= 0) {
             this.coaches[index] = { ...this.coaches[index], ...updates };
             this.saveCoaches();
+            if (this.remote) remoteData.updateCoach(coachId, updates).catch(this.logRemoteError('updateCoach'));
             return true;
         }
         return false;
@@ -365,6 +480,7 @@ class StorageService {
         if (index >= 0) {
             this.clubs[index] = { ...this.clubs[index], ...updates };
             this.saveClubs();
+            if (this.remote) remoteData.updateClub(clubId, updates).catch(this.logRemoteError('updateClub'));
             return true;
         }
         return false;
@@ -375,6 +491,7 @@ class StorageService {
         if (index >= 0) {
             this.students[index] = { ...this.students[index], ...updates };
             this.saveStudents();
+            if (this.remote) remoteData.updateStudent(studentId, updates).catch(this.logRemoteError('updateStudent'));
             return true;
         }
         return false;

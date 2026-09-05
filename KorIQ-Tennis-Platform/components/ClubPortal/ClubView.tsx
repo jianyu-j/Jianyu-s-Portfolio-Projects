@@ -30,6 +30,7 @@ import SyncLogModal from './components/SyncLogModal';
 import ClubGettingStartedWizard from './components/ClubGettingStartedWizard';
 import ActivityFeed from './components/ActivityFeed';
 import CoachInvoiceSystem from './components/CoachInvoiceSystem';
+import DatabaseInsightsPanel from './components/DatabaseInsightsPanel';
 
 // SVG Icon Components for professional UI
 const UsersIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
@@ -1054,6 +1055,9 @@ export const ClubView: React.FC<ClubViewProps> = ({ user, onLogout }) => {
                 <div className="flex justify-between items-center">
                     <h2 className="text-2xl font-bold text-gray-800">Reports & Analytics</h2>
                 </div>
+
+                {/* SQL-backed evaluation analytics (renders only when Supabase is configured) */}
+                <DatabaseInsightsPanel clubId={user.linkedEntityId} />
 
                 {/* Optimization Insights Section */}
                 <div className="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-xl p-6 border border-amber-200">

@@ -102,7 +102,7 @@ Models are fit to conditions that held in the past. Black swan events sit outsid
 | **[DiT Super-Resolution](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/dit-super-resolution)** | Deep Learning · Generative Models | Python, PyTorch | Trained a diffusion transformer for image super-resolution |
 | **[Hospital Nursing Intervention Pilot](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Hospital-Nursing-Intervention-Pilot)** | Healthcare Analytics · Data Modeling | MySQL, SQL, MySQL Workbench | Star-schema database (ERD, fact and dimension tables) with SQL analysis of hospital bed utilization |
 | **[Stock Direction Prediction](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/Stock%20Direction%20Prediction)** | ML · Financial Markets | Python, Scikit-learn | Classification model predicting stock price direction |
-| **[KorIQ Tennis Platform](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/KorIQ-Tennis-Platform)** *(prototype)* | Product Design · Front-End · Business Analytics | React, TypeScript, Vite, Recharts, Tailwind | Interactive front-end prototype of a player / student / coach / club platform with an NTRP-weighted evaluation engine and club revenue analytics · **[Live Demo](https://jianyu-j.github.io/Jianyu-s-Portfolio-Projects/KorIQ-Tennis-Platform/demo/)** |
+| **[KorIQ Tennis Platform](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/KorIQ-Tennis-Platform)** *(prototype)* | Product Design · Full-Stack · SQL Analytics | React, TypeScript, Vite, Supabase (Postgres, RLS), Recharts, Tailwind | Player / student / coach / club platform with an NTRP-weighted evaluation engine scored in Postgres, row-level security per role, and SQL-view analytics · **[Live Demo](https://jianyu-j.github.io/Jianyu-s-Portfolio-Projects/KorIQ-Tennis-Platform/demo/)** |
 | **Vancouver Housing Investment Analysis** *(in progress)* | Geospatial · Investment Analytics | Python, GeoPandas, Power BI, StatCan | Power BI map ranking Vancouver areas by land value & demographics |
 
 ---
@@ -188,15 +188,16 @@ A healthcare analytics database supporting operational analysis of a nursing-int
 ---
 
 ### KorIQ Tennis Platform *(prototype)*
-*React · TypeScript · Vite · Recharts · Tailwind*
+*React · TypeScript · Vite · Supabase (Postgres, Auth, RLS) · Recharts · Tailwind*
 
-A working front-end prototype of a platform connecting tennis players, students, coaches, and clubs, built to think through the product and data-modelling problems before committing to a backend. Everything runs in the browser against seeded mock data, so the full app can be explored from the live demo.
+A prototype of a platform connecting tennis players, students, coaches, and clubs. The core loop — accounts, coach evaluations, student progress, and club analytics — runs on a real Postgres backend (Supabase); the rest of the product surface is a front-end prototype over seeded data. The live demo is connected to the database, so an evaluation entered as a coach shows up in the student's and club's views.
 
-- Designed an **NTRP-based evaluation engine** that scores stroke fundamentals and level-specific performance criteria on one comparable 0–100 scale, with weights that shift from fundamentals-heavy for beginners (70/30) to performance-only for advanced players.
+- Designed an **NTRP-based evaluation engine** that scores stroke fundamentals and level-specific performance criteria on one comparable 0–100 scale, with weights that shift from fundamentals-heavy for beginners (70/30) to performance-only for advanced players. Scoring is implemented **in the database** (Postgres trigger + weight table), so every client and query sees the same number.
+- Modelled the domain in **SQL with row-level security**: coaches see only their club's students, students see only themselves, clubs see their own roster — enforced by Postgres policies, not front-end filtering. Sign-up flows that claim pre-existing coach/student records run as audited `security definer` functions.
+- Built the analytics as **SQL views** (per-student progress with window functions, coach impact, monthly evaluation volume, level benchmarks) and rendered them in the club portal with Recharts alongside the broader **business-intelligence layer** (churn, lifetime value, coach revenue and retention, concentration risk, break-even).
 - Built **four role-based portals** (Player, Student, Coach, Club) plus a public community layer, covering evaluations, lesson booking, a tutorial marketplace, partner matching, and club events.
-- Implemented the **club business-intelligence layer**: student churn and lifetime value, coach revenue and retention impact, revenue by time / level, concentration risk, break-even, and auto-generated insights, all visualised with Recharts.
 
-**Scope note:** this is a prototype. Auth, payment integrations (Stripe / Square / PayPal), and the in-app assistant are simulated, and persistence is `localStorage`. A separate computer-vision self-rating feature (MediaPipe Pose + TrackNet on match video) is in early development and is not part of this codebase.
+**Scope note:** payments (Stripe / Square / PayPal), messaging, bookings, and the in-app assistant are simulated in the browser. The demo database is shared, so anything entered there is visible to other visitors. A separate computer-vision self-rating feature (MediaPipe Pose + TrackNet on match video) is in early development and is not part of this codebase.
 
 **[Live Demo →](https://jianyu-j.github.io/Jianyu-s-Portfolio-Projects/KorIQ-Tennis-Platform/demo/)** · **[View Project →](https://github.com/jianyu-j/Jianyu-s-Portfolio-Projects/tree/main/KorIQ-Tennis-Platform)**
 

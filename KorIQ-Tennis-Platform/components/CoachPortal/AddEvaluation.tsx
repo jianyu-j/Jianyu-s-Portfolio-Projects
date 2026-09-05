@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Student, NtrpLevel, StrokeType, FundamentalsInput, PerformanceInput, SessionType, Session } from '../../types';
+import { Student, Coach, NtrpLevel, StrokeType, FundamentalsInput, PerformanceInput, SessionType, Session } from '../../types';
 import { Button } from '../ui/Button';
 import { storageService } from '../../services/storageService';
-import { calculateFundamentalsAverage, calculateFinalScore, getCriteriaForLevel } from '../../utils/calculations';
+import { calculateStrokeScore, calculateFinalScoreNullable, getCriteriaForLevel } from '../../utils/calculations';
 
 interface AddEvaluationProps {
     student: Student;
+    /** The signed-in coach authoring the evaluation. */
+    coach?: Coach;
     onComplete: () => void;
 }
 
 const STROKES = [StrokeType.FH, StrokeType.BH, StrokeType.Serve, StrokeType.Volley];
 const FUNDAMENTAL_PARTS = ['grip', 'setup', 'impact', 'swing', 'recovery'] as const;
 
-export const AddEvaluation: React.FC<AddEvaluationProps> = ({ student, onComplete }) => {
+export const AddEvaluation: React.FC<AddEvaluationProps> = ({ student, coach, onComplete }) => {
     const [availableLevels, setAvailableLevels] = useState<NtrpLevel[]>([]);
+    const [saveError, setSaveError] = useState('');
     const [selectedNtrp, setSelectedNtrp] = useState<NtrpLevel>(student.currentNtrp);
     
     const [selectedStrokes, setSelectedStrokes] = useState<StrokeType[]>([]);
@@ -99,33 +102,43 @@ export const AddEvaluation: React.FC<AddEvaluationProps> = ({ student, onComplet
         setPerformanceScores(prev => ({ ...prev, [criterion]: value }));
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
+        setSaveError('');
 
-        const fundStats = calculateFundamentalsAverage(fundamentals);
-        
-        // Performance Average calculation
+        // Only strokes the coach selected count; an unassessed stroke is 0 and
+        // excluded from the average (matches the database trigger).
+        const strokeScore = (s: StrokeType) => selectedStrokes.includes(s) ? calculateStrokeScore(fundamentals[s]) : 0;
+        const fh = strokeScore(StrokeType.FH);
+        const bh = strokeScore(StrokeType.BH);
+        const serve = strokeScore(StrokeType.Serve);
+        const volley = strokeScore(StrokeType.Volley);
+        const assessed = [fh, bh, serve, volley].filter(v => v > 0);
+        const fundAverage = assessed.length > 0 ? assessed.reduce((a, b) => a + b, 0) / assessed.length : null;
+
         const scores = Object.values(performanceScores) as number[];
         const perfAverage = scores.length > 0 ? scores.reduce((a, b) => a + b, 0) / scores.length : 0;
-        
-        const finalScore = calculateFinalScore(selectedNtrp, fundStats.average, perfAverage);
 
-        const newSession = {
+        const finalScore = calculateFinalScoreNullable(selectedNtrp, fundAverage, perfAverage) ?? 0;
+
+        const newSession: Session = {
             id: Date.now().toString(),
             studentId: student.id,
-            coachId: 'c1', // Mock logged in coach
+            coachId: coach?.id ?? 'c1',
+            coachName: coach?.name,
+            clubId: sessionType === 'CLUB' ? (coach?.clubId ?? student.clubId) : undefined,
             date: new Date().toISOString(),
             ntrpLevel: selectedNtrp,
             classType: '1-on-1',
             sessionType: sessionType,
             durationMinutes: 60,
             fundamentals: {
-                fhScore: fundStats.fh,
-                bhScore: fundStats.bh,
-                serveScore: fundStats.serve,
-                volleyScore: fundStats.volley,
-                average: fundStats.average
+                fhScore: fh,
+                bhScore: bh,
+                serveScore: serve,
+                volleyScore: volley,
+                average: fundAverage ?? 0
             },
             performance: {
                 scores: performanceScores,
@@ -135,11 +148,14 @@ export const AddEvaluation: React.FC<AddEvaluationProps> = ({ student, onComplet
             notes
         };
 
-        storageService.addSession(newSession as any);
-        setTimeout(() => {
-            setIsSubmitting(false);
+        try {
+            await storageService.addSession(newSession);
             onComplete();
-        }, 500);
+        } catch (err) {
+            setSaveError(err instanceof Error ? err.message : 'Could not save the evaluation.');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -264,6 +280,10 @@ export const AddEvaluation: React.FC<AddEvaluationProps> = ({ student, onComplet
                     placeholder="Session feedback..."
                 />
             </div>
+
+            {saveError && (
+                <p className="text-red-600 text-sm text-center bg-red-50 border border-red-200 rounded-lg p-3">{saveError}</p>
+            )}
 
             <Button type="submit" fullWidth disabled={isSubmitting}>
                 {isSubmitting ? 'Saving...' : 'Submit Evaluation'}

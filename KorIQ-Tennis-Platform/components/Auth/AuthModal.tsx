@@ -1,8 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
-import { UserRole, NtrpLevel, CoachType, Club, Student, Coach, Player } from '../../types';
-import { Button } from '../ui/Button';
+import { UserRole, NtrpLevel, CoachType, Club, Student, Coach } from '../../types';
 import { storageService } from '../../services/storageService';
+import { authService, AlreadyRegisteredError } from '../../services/authService';
+
+type FoundCoach = Pick<Coach, 'id' | 'name' | 'clubId' | 'coachType' | 'status' | 'joinedDate'>;
+type FoundStudent = Pick<Student, 'id' | 'name' | 'status'> & { email?: string };
 
 interface AuthModalProps {
     isOpen: boolean;
@@ -24,6 +27,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [busy, setBusy] = useState(false);
 
     // --- COACH SPECIFIC STATES ---
     const [coachType, setCoachType] = useState<CoachType | null>(null);
@@ -40,12 +44,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
 
     // Coach Claiming State
     const [coachSignupState, setCoachSignupState] = useState<'SELECTION' | 'CLUB_EMAIL_CHECK' | 'CLUB_CLAIM_FORM' | 'INDEPENDENT_FORM'>('SELECTION');
-    const [foundCoach, setFoundCoach] = useState<Coach | null>(null);
+    const [foundCoach, setFoundCoach] = useState<FoundCoach | null>(null);
 
     // --- STUDENT SPECIFIC ---
     const [age, setAge] = useState('');
     const [studentSignupState, setStudentSignupState] = useState<'EMAIL' | 'CREATE' | 'CLAIM'>('EMAIL');
-    const [foundStudent, setFoundStudent] = useState<Student | null>(null);
+    const [foundStudent, setFoundStudent] = useState<FoundStudent | null>(null);
 
     // --- PLAYER SPECIFIC ---
     const [city, setCity] = useState('');
@@ -152,13 +156,37 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
             : <div className="text-red-500 text-xs mt-1">✗ Passwords do not match</div>;
     };
 
+    /** Run an auth action, surfacing errors in the form and closing on success. */
+    const submit = async (action: () => Promise<any>) => {
+        setError('');
+        setBusy(true);
+        try {
+            const user = await action();
+            if (user) {
+                onLoginSuccess(user);
+                onClose();
+            }
+        } catch (err) {
+            if (err instanceof AlreadyRegisteredError && role === 'PLAYER') {
+                // Email already has an account: offer to link a Player profile to it.
+                setPlayerSignupState('LINK_ACCOUNT');
+                setPassword('');
+                setConfirmPassword('');
+                setError('');
+            } else {
+                setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+            }
+        } finally {
+            setBusy(false);
+        }
+    };
+
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
 
-        const loginUser = role === 'COACH' ? email : username;
+        const identifier = role === 'COACH' ? email : username;
 
-        // 1. Basic Field Validation
         if (role === 'COACH') {
             if (!loginCoachType) {
                 setError('Please select a coach type.');
@@ -170,63 +198,16 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
             }
         }
 
-        // 2. COACH SPECIFIC CHECKS
-        if (role === 'COACH') {
-            const coach = storageService.findCoachByEmail(email);
-
-            if (!coach) {
-                setError("❌ Email not found. No account exists with this email address. Please check your email or sign up for an account.");
-                return;
-            }
-
-            // Check if account matches selected type
-            if (loginCoachType === 'Club') {
-                if (coach.coachType !== 'Club') {
-                    setError("This account is registered as an Independent Coach.");
-                    return;
-                }
-                if (coach.clubId !== selectedClubId) {
-                    setError("❌ Club mismatch. This account is not registered with the selected club. Please select the correct club or contact your club admin.");
-                    return;
-                }
-            } else if (loginCoachType === 'Independent') {
-                if (coach.coachType !== 'Independent') {
-                    setError("This account is registered as a Club Coach.");
-                    return;
-                }
-            }
-
-            // Check Status
-            if (coach.status === 'Unclaimed') {
-                setError("⚠️ Account not yet claimed. Your club admin has created your profile, but you haven't set up your password yet. [Claim Account Now]");
-                return;
-            }
-        } else {
-            // STUDENT / CLUB / PLAYER / GENERIC Check
-            const userExists = storageService.checkUserRoleExists(loginUser, role);
-            if (!userExists) {
-                // If specific role not found, check if ANY user exists (for Link hint?)
-                if (storageService.checkUserExists(loginUser)) {
-                    setError(`❌ This email exists but does not have a ${role.charAt(0).toUpperCase() + role.slice(1).toLowerCase()} profile. Please Link Account.`);
-                } else {
-                    setError("❌ Email/Username not found. No account exists with this identifier.");
-                }
-                return;
-            }
-        }
-
-        // 3. AUTHENTICATE
-        const user = storageService.authenticate(loginUser, password, role);
-
-        if (user) {
-            onLoginSuccess(user);
-            onClose();
-        } else {
-            setError('❌ Incorrect password. The password you entered is incorrect. Please try again or click "Forgot Password?"');
-        }
+        submit(() => authService.login({
+            role,
+            identifier,
+            password,
+            coachType: loginCoachType,
+            clubId: selectedClubId || undefined,
+        }));
     };
 
-    const handleCheckEmail = (e: React.FormEvent) => {
+    const handleCheckEmail = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
         if (!username.includes('@')) {
@@ -234,21 +215,27 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
             return;
         }
 
-        const student = storageService.findStudentByEmail(username);
-
-        if (student) {
-            if (student.status === 'Unclaimed') {
-                setFoundStudent(student);
-                setStudentSignupState('CLAIM');
+        setBusy(true);
+        try {
+            const student = await authService.lookupStudent(username);
+            if (student) {
+                if (student.status === 'Unclaimed') {
+                    setFoundStudent({ ...student, email: username });
+                    setStudentSignupState('CLAIM');
+                } else {
+                    setError("⚠️ An account with this email already exists. Please log in.");
+                }
             } else {
-                setError("⚠️ An account with this email already exists. Please log in.");
+                setStudentSignupState('CREATE');
             }
-        } else {
-            setStudentSignupState('CREATE');
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Lookup failed.');
+        } finally {
+            setBusy(false);
         }
     };
 
-    const handleCheckCoachEmail = (e: React.FormEvent) => {
+    const handleCheckCoachEmail = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
         if (!email.includes('@')) {
@@ -256,21 +243,27 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
             return;
         }
 
-        const coach = storageService.findCoachByEmail(email);
-
-        if (coach) {
-            if (coach.coachType === 'Club') {
-                if (coach.status === 'Unclaimed') {
-                    setFoundCoach(coach);
-                    setCoachSignupState('CLUB_CLAIM_FORM');
+        setBusy(true);
+        try {
+            const coach = await authService.lookupCoach(email);
+            if (coach) {
+                if (coach.coachType === 'Club' || coach.coachType === 'Both') {
+                    if (coach.status === 'Unclaimed') {
+                        setFoundCoach(coach);
+                        setCoachSignupState('CLUB_CLAIM_FORM');
+                    } else {
+                        setError("⚠️ Account already claimed. Please log in instead.");
+                    }
                 } else {
-                    setError("⚠️ Account already claimed. Please log in instead.");
+                    setError("⚠️ Account already exists. Please log in instead.");
                 }
             } else {
-                setError("⚠️ Account already exists. Please log in instead.");
+                setError("❌ No profile found. Please contact your club admin to add you first.");
             }
-        } else {
-            setError("❌ No profile found. Please contact your club admin to add you first.");
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Lookup failed.');
+        } finally {
+            setBusy(false);
         }
     };
 
@@ -285,13 +278,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
             return;
         }
 
-        // Check if user exists at all (any role)
-        const exists = storageService.checkUserExists(username);
-
+        // Offline mode can tell us up front whether the email is taken.
+        // Supabase deliberately hides that, so we find out at sign-up time.
+        const exists = authService.accountExists(username);
         if (exists) {
-            // Check if specifically a Player role exists
-            const playerExists = storageService.checkUserRoleExists(username, 'PLAYER');
-            if (playerExists) {
+            if (authService.hasRole(username, 'PLAYER')) {
                 setError("A Player account with this email already exists. Please log in.");
                 return;
             }
@@ -305,149 +296,41 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
         e.preventDefault();
         setError('');
 
-        const id = Date.now().toString();
-
         if (role === 'PLAYER') {
             if (playerSignupState === 'CREATE_PASSWORD') {
-                if (!isPasswordValid(password)) {
-                    setError("Password does not meet requirements.");
-                    return;
-                }
-                if (password !== confirmPassword) {
-                    setError("Passwords do not match");
-                    return;
-                }
-
-                // Create Player
-                storageService.addPlayer({
-                    id, name, email: username, city, currentNtrp: ntrp, joinedDate: new Date().toISOString()
-                });
-
-                // Register User
-                const success = storageService.registerUser({ username, password, role, linkedEntityId: id });
-                if (success) {
-                    const user = storageService.authenticate(username, password, role);
-                    if (user) { onLoginSuccess(user); onClose(); }
-                } else { setError('Error creating user.'); }
-
+                if (!isPasswordValid(password)) { setError("Password does not meet requirements."); return; }
+                if (password !== confirmPassword) { setError("Passwords do not match"); return; }
+                submit(() => authService.signupPlayer({ name, email: username, city, ntrp, password }));
             } else if (playerSignupState === 'LINK_ACCOUNT') {
-                const existingUser = storageService.authenticate(username, password);
-
-                if (existingUser) {
-                    storageService.addPlayer({
-                        id, name, email: username, city, currentNtrp: ntrp, joinedDate: new Date().toISOString()
-                    });
-
-                    const success = storageService.registerUser({ username, password, role, linkedEntityId: id });
-                    if (success) {
-                        const user = storageService.authenticate(username, password, role);
-                        if (user) { onLoginSuccess(user); onClose(); }
-                    } else { setError('Error linking user.'); }
-                } else {
-                    setError('Incorrect password.');
-                }
+                submit(() => authService.signupPlayer({ name, email: username, city, ntrp, password, link: true }));
             }
             return;
         }
 
-        // OTHER ROLES
         if (!isPasswordValid(password)) {
             setError("Password does not meet requirements.");
             return;
         }
 
         if (role === 'COACH') {
-            if (password !== confirmPassword) {
-                setError("Passwords do not match");
-                return;
-            }
-
+            if (password !== confirmPassword) { setError("Passwords do not match"); return; }
             if (coachSignupState === 'CLUB_CLAIM_FORM' && foundCoach) {
-                const claimed = storageService.claimCoachProfile(foundCoach.id);
-                if (claimed) {
-                    const success = storageService.registerUser({
-                        username: foundCoach.email,
-                        password,
-                        role: 'COACH',
-                        linkedEntityId: foundCoach.id
-                    });
-
-                    if (success) {
-                        const user = storageService.authenticate(foundCoach.email, password, role);
-                        if (user) { onLoginSuccess(user); onClose(); }
-                    } else {
-                        setError('Error registering user.');
-                    }
-                } else {
-                    setError('Error claiming profile.');
-                }
-            }
-            else if (coachSignupState === 'INDEPENDENT_FORM') {
-                storageService.addCoach({
-                    id, name, email, phone, coachType: 'Independent', status: 'Active', joinedDate: new Date().toISOString()
-                });
-
-                const success = storageService.registerUser({
-                    username: email, password, role: 'COACH', linkedEntityId: id
-                });
-
-                if (success) {
-                    const user = storageService.authenticate(email, password, role);
-                    if (user) {
-                        onLoginSuccess(user);
-                        onClose();
-                    }
-                } else {
-                    setError('An account with this email already exists. Please log in.');
-                }
+                submit(() => authService.claimCoach(foundCoach, email, password));
+            } else if (coachSignupState === 'INDEPENDENT_FORM') {
+                submit(() => authService.signupIndependentCoach({ name, email, phone, password }));
             }
 
         } else if (role === 'CLUB') {
-            if (!name.trim()) {
-                setError("Club name is required");
-                return;
-            }
-            if (!username.trim() || !username.includes('@')) {
-                setError("Valid email is required");
-                return;
-            }
-            storageService.addClub({ id, name });
-            const success = storageService.registerUser({ username, password, role, linkedEntityId: id });
-            if (success) {
-                const user = storageService.authenticate(username, password, role);
-                if (user) { onLoginSuccess(user); onClose(); }
-            } else { setError('Email already exists'); }
+            if (!name.trim()) { setError("Club name is required"); return; }
+            if (!username.trim() || !username.includes('@')) { setError("Valid email is required"); return; }
+            submit(() => authService.signupClub({ name, email: username, password }));
 
         } else if (role === 'STUDENT') {
+            if (password !== confirmPassword) { setError("Passwords do not match"); return; }
             if (studentSignupState === 'CLAIM' && foundStudent) {
-                if (password !== confirmPassword) {
-                    setError("Passwords do not match");
-                    return;
-                }
-                const claimed = storageService.claimStudentProfile(foundStudent.id);
-                if (claimed) {
-                    const success = storageService.registerUser({ username, password, role, linkedEntityId: foundStudent.id });
-                    if (success) {
-                        const user = storageService.authenticate(username, password, role);
-                        if (user) { onLoginSuccess(user); onClose(); }
-                    } else { setError('Error registering user.'); }
-                } else {
-                    setError('Error claiming profile.');
-                }
-
+                submit(() => authService.claimStudent(foundStudent, username, password));
             } else if (studentSignupState === 'CREATE') {
-                if (password !== confirmPassword) {
-                    setError("Passwords do not match");
-                    return;
-                }
-                storageService.addStudent({
-                    id, name, email: username, age: parseInt(age) || 18, currentNtrp: NtrpLevel.L10_15, status: 'Claimed'
-                });
-                const success = storageService.registerUser({ username, password, role, linkedEntityId: id });
-                if (success) {
-                    const user = storageService.authenticate(username, password, role);
-                    if (user) { onLoginSuccess(user); onClose(); }
-                } else { setError('Username already exists'); }
+                submit(() => authService.signupStudent({ name, email: username, age: parseInt(age) || 18, password }));
             }
         }
     };
@@ -488,7 +371,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
 
                     {error && <p className="text-red-400 text-sm text-center bg-red-500/10 p-2 rounded border border-red-500/20">{error}</p>}
 
-                    <button type="submit" className="w-full py-3 bg-gradient-to-r from-tennis-600 to-tennis-500 hover:from-tennis-500 hover:to-tennis-400 text-white font-bold rounded-xl shadow-lg shadow-tennis-900/50 transform transition-all active:scale-95">
+                    <button type="submit" disabled={busy} className="w-full py-3 bg-gradient-to-r from-tennis-600 to-tennis-500 hover:from-tennis-500 hover:to-tennis-400 text-white font-bold rounded-xl shadow-lg shadow-tennis-900/50 transform transition-all active:scale-95">
                         Continue
                     </button>
 
@@ -517,7 +400,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
 
                     {error && <p className="text-red-400 text-sm text-center bg-red-500/10 p-2 rounded border border-red-500/20">{error}</p>}
 
-                    <button type="submit" className="w-full py-3 bg-gradient-to-r from-tennis-600 to-tennis-500 hover:from-tennis-500 hover:to-tennis-400 text-white font-bold rounded-xl shadow-lg shadow-tennis-900/50 transform transition-all active:scale-95">
+                    <button type="submit" disabled={busy} className="w-full py-3 bg-gradient-to-r from-tennis-600 to-tennis-500 hover:from-tennis-500 hover:to-tennis-400 text-white font-bold rounded-xl shadow-lg shadow-tennis-900/50 transform transition-all active:scale-95">
                         Create Account
                     </button>
                 </form>
@@ -540,7 +423,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
 
                     {error && <p className="text-red-400 text-sm text-center bg-red-500/10 p-2 rounded border border-red-500/20">{error}</p>}
 
-                    <button type="submit" className="w-full py-3 bg-gradient-to-r from-tennis-600 to-tennis-500 hover:from-tennis-500 hover:to-tennis-400 text-white font-bold rounded-xl shadow-lg shadow-tennis-900/50 transform transition-all active:scale-95">
+                    <button type="submit" disabled={busy} className="w-full py-3 bg-gradient-to-r from-tennis-600 to-tennis-500 hover:from-tennis-500 hover:to-tennis-400 text-white font-bold rounded-xl shadow-lg shadow-tennis-900/50 transform transition-all active:scale-95">
                         Link & Continue
                     </button>
                 </form>
@@ -618,7 +501,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
                         </div>
                     )}
 
-                    <button type="submit" className="w-full py-3 bg-gradient-to-r from-tennis-600 to-tennis-500 hover:from-tennis-500 hover:to-tennis-400 text-white font-bold rounded-xl shadow-lg shadow-tennis-900/50 transform transition-all active:scale-95">
+                    <button type="submit" disabled={busy} className="w-full py-3 bg-gradient-to-r from-tennis-600 to-tennis-500 hover:from-tennis-500 hover:to-tennis-400 text-white font-bold rounded-xl shadow-lg shadow-tennis-900/50 transform transition-all active:scale-95">
                         Find Profile
                     </button>
 
@@ -659,7 +542,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
 
                     {error && <p className="text-red-400 text-sm text-center bg-red-500/10 p-2 rounded border border-red-500/20">{error}</p>}
 
-                    <button type="submit" className="w-full py-3 bg-gradient-to-r from-tennis-600 to-tennis-500 hover:from-tennis-500 hover:to-tennis-400 text-white font-bold rounded-xl shadow-lg shadow-tennis-900/50 transform transition-all active:scale-95">
+                    <button type="submit" disabled={busy} className="w-full py-3 bg-gradient-to-r from-tennis-600 to-tennis-500 hover:from-tennis-500 hover:to-tennis-400 text-white font-bold rounded-xl shadow-lg shadow-tennis-900/50 transform transition-all active:scale-95">
                         Claim Account
                     </button>
                 </form>
@@ -709,7 +592,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
 
                 {error && <p className="text-red-400 text-sm text-center bg-red-500/10 p-2 rounded border border-red-500/20">{error}</p>}
 
-                <button type="submit" className="w-full py-3 bg-gradient-to-r from-tennis-600 to-tennis-500 hover:from-tennis-500 hover:to-tennis-400 text-white font-bold rounded-xl shadow-lg shadow-tennis-900/50 transform transition-all active:scale-95 mt-4">
+                <button type="submit" disabled={busy} className="w-full py-3 bg-gradient-to-r from-tennis-600 to-tennis-500 hover:from-tennis-500 hover:to-tennis-400 text-white font-bold rounded-xl shadow-lg shadow-tennis-900/50 transform transition-all active:scale-95 mt-4">
                     Create Account
                 </button>
             </form>
@@ -726,7 +609,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
                             value={username} onChange={e => setUsername(e.target.value)} placeholder="student@example.com" />
                     </div>
                     {error && <p className="text-red-400 text-sm text-center bg-red-500/10 p-2 rounded border border-red-500/20">{error}</p>}
-                    <button type="submit" className="w-full py-3 bg-gradient-to-r from-tennis-600 to-tennis-500 hover:from-tennis-500 hover:to-tennis-400 text-white font-bold rounded-xl shadow-lg shadow-tennis-900/50 transform transition-all active:scale-95">
+                    <button type="submit" disabled={busy} className="w-full py-3 bg-gradient-to-r from-tennis-600 to-tennis-500 hover:from-tennis-500 hover:to-tennis-400 text-white font-bold rounded-xl shadow-lg shadow-tennis-900/50 transform transition-all active:scale-95">
                         Continue
                     </button>
                 </form>
@@ -761,7 +644,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
 
                     {error && <p className="text-red-400 text-sm text-center bg-red-500/10 p-2 rounded border border-red-500/20">{error}</p>}
 
-                    <button type="submit" className="w-full py-3 bg-gradient-to-r from-tennis-600 to-tennis-500 hover:from-tennis-500 hover:to-tennis-400 text-white font-bold rounded-xl shadow-lg shadow-tennis-900/50 transform transition-all active:scale-95">
+                    <button type="submit" disabled={busy} className="w-full py-3 bg-gradient-to-r from-tennis-600 to-tennis-500 hover:from-tennis-500 hover:to-tennis-400 text-white font-bold rounded-xl shadow-lg shadow-tennis-900/50 transform transition-all active:scale-95">
                         Claim Profile
                     </button>
                 </form>
@@ -804,7 +687,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
 
                 {error && <p className="text-red-400 text-sm text-center bg-red-500/10 p-2 rounded border border-red-500/20">{error}</p>}
 
-                <button type="submit" className="w-full py-3 bg-gradient-to-r from-tennis-600 to-tennis-500 hover:from-tennis-500 hover:to-tennis-400 text-white font-bold rounded-xl shadow-lg shadow-tennis-900/50 transform transition-all active:scale-95">
+                <button type="submit" disabled={busy} className="w-full py-3 bg-gradient-to-r from-tennis-600 to-tennis-500 hover:from-tennis-500 hover:to-tennis-400 text-white font-bold rounded-xl shadow-lg shadow-tennis-900/50 transform transition-all active:scale-95">
                     Create Account
                 </button>
             </form>
@@ -832,7 +715,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
 
             {error && <p className="text-red-400 text-sm text-center bg-red-500/10 p-2 rounded border border-red-500/20">{error}</p>}
 
-            <button type="submit" className="w-full py-3 bg-gradient-to-r from-tennis-600 to-tennis-500 hover:from-tennis-500 hover:to-tennis-400 text-white font-bold rounded-xl shadow-lg shadow-tennis-900/50 transform transition-all active:scale-95">
+            <button type="submit" disabled={busy} className="w-full py-3 bg-gradient-to-r from-tennis-600 to-tennis-500 hover:from-tennis-500 hover:to-tennis-400 text-white font-bold rounded-xl shadow-lg shadow-tennis-900/50 transform transition-all active:scale-95">
                 Create Account
             </button>
         </form>
@@ -909,7 +792,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
                     {role === 'COACH' ? 'Email *' : 'Email *'}
                 </label>
                 <input
-                    type={role === 'COACH' ? 'email' : 'text'}
+                    type="text"
+                    autoComplete="username"
                     required
                     className={INPUT_STYLE}
                     placeholder={role === 'COACH' ? 'coach@example.com' : 'email@example.com'}
@@ -925,7 +809,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
 
             {error && <div className="bg-red-500/10 border border-red-500/20 p-3 rounded text-red-400 text-sm">{error}</div>}
 
-            <button type="submit" className="w-full py-3 bg-gradient-to-r from-tennis-600 to-tennis-500 hover:from-tennis-500 hover:to-tennis-400 text-white font-bold rounded-xl shadow-lg shadow-tennis-900/50 transform transition-all active:scale-95" disabled={role === 'COACH' && !loginCoachType}>
+            <button type="submit" className="w-full py-3 bg-gradient-to-r from-tennis-600 to-tennis-500 hover:from-tennis-500 hover:to-tennis-400 text-white font-bold rounded-xl shadow-lg shadow-tennis-900/50 transform transition-all active:scale-95" disabled={busy || (role === 'COACH' && !loginCoachType)}>
                 Log In
             </button>
         </form>
