@@ -151,6 +151,9 @@ for (const u of mock.MOCK_USERS) {
     emit(`        values (gen_random_uuid(), v_uid, v_uid::text,`);
     emit(`                jsonb_build_object('sub', v_uid::text, 'email', ${q(email)}, 'email_verified', true),`);
     emit(`                'email', now(), now(), now());`);
+    emit('    else');
+    emit('        -- Re-seeding always restores the demo password, in case a visitor changed it.');
+    emit(`        update auth.users set encrypted_password = crypt(${q(u.password)}, gen_salt('bf')), updated_at = now() where id = v_uid;`);
     emit('    end if;');
     emit('    insert into public.profiles (user_id, role, linked_entity_id, email, onboarding_completed_at)');
     emit(`    values (v_uid, ${q(u.role)}, ${q(u.linkedEntityId)}, ${q(email)}, now())`);

@@ -110,6 +110,9 @@ begin
         values (gen_random_uuid(), v_uid, v_uid::text,
                 jsonb_build_object('sub', v_uid::text, 'email', 'coach@koriq.demo', 'email_verified', true),
                 'email', now(), now(), now());
+    else
+        -- Re-seeding always restores the demo password, in case a visitor changed it.
+        update auth.users set encrypted_password = crypt('password', gen_salt('bf')), updated_at = now() where id = v_uid;
     end if;
     insert into public.profiles (user_id, role, linked_entity_id, email, onboarding_completed_at)
     values (v_uid, 'COACH', 'c1', 'coach@koriq.demo', now())
@@ -129,6 +132,9 @@ begin
         values (gen_random_uuid(), v_uid, v_uid::text,
                 jsonb_build_object('sub', v_uid::text, 'email', 'coach2@koriq.demo', 'email_verified', true),
                 'email', now(), now(), now());
+    else
+        -- Re-seeding always restores the demo password, in case a visitor changed it.
+        update auth.users set encrypted_password = crypt('password', gen_salt('bf')), updated_at = now() where id = v_uid;
     end if;
     insert into public.profiles (user_id, role, linked_entity_id, email, onboarding_completed_at)
     values (v_uid, 'COACH', 'c2', 'coach2@koriq.demo', now())
@@ -148,6 +154,9 @@ begin
         values (gen_random_uuid(), v_uid, v_uid::text,
                 jsonb_build_object('sub', v_uid::text, 'email', 'student@koriq.demo', 'email_verified', true),
                 'email', now(), now(), now());
+    else
+        -- Re-seeding always restores the demo password, in case a visitor changed it.
+        update auth.users set encrypted_password = crypt('password', gen_salt('bf')), updated_at = now() where id = v_uid;
     end if;
     insert into public.profiles (user_id, role, linked_entity_id, email, onboarding_completed_at)
     values (v_uid, 'STUDENT', 's1', 'student@koriq.demo', now())
@@ -167,6 +176,9 @@ begin
         values (gen_random_uuid(), v_uid, v_uid::text,
                 jsonb_build_object('sub', v_uid::text, 'email', 'club@koriq.demo', 'email_verified', true),
                 'email', now(), now(), now());
+    else
+        -- Re-seeding always restores the demo password, in case a visitor changed it.
+        update auth.users set encrypted_password = crypt('password', gen_salt('bf')), updated_at = now() where id = v_uid;
     end if;
     insert into public.profiles (user_id, role, linked_entity_id, email, onboarding_completed_at)
     values (v_uid, 'CLUB', 'club_vancouver', 'club@koriq.demo', now())
@@ -186,6 +198,9 @@ begin
         values (gen_random_uuid(), v_uid, v_uid::text,
                 jsonb_build_object('sub', v_uid::text, 'email', 'player@koriq.demo', 'email_verified', true),
                 'email', now(), now(), now());
+    else
+        -- Re-seeding always restores the demo password, in case a visitor changed it.
+        update auth.users set encrypted_password = crypt('password', gen_salt('bf')), updated_at = now() where id = v_uid;
     end if;
     insert into public.profiles (user_id, role, linked_entity_id, email, onboarding_completed_at)
     values (v_uid, 'PLAYER', 'p1', 'player@koriq.demo', now())
