@@ -1,0 +1,27 @@
+name: KorIQ – keep Supabase demo awake
+
+# Supabase pauses free-tier projects after 7 days without activity.
+# This pings the public REST API every 3 days so the live demo keeps working.
+# The anon key is public by design (row-level security limits it to the clubs table when signed out).
+
+on:
+  schedule:
+    - cron: "17 6 */3 * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Query the demo database
+        env:
+          SUPABASE_URL: https://kzhzfwibnfzucffveawg.supabase.co
+          SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt6aHpmd2libmZ6dWNmZnZlYXdnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg1NjM2OTIsImV4cCI6MjEwNDEzOTY5Mn0.v3uT2XE_8StZYdkemuXocWpTnQoxnOIjJ5j_o5gUjII
+        run: |
+          set -euo pipefail
+          body=$(curl -sS --fail --max-time 30 \
+            "$SUPABASE_URL/rest/v1/clubs?select=id,name&order=name.asc" \
+            -H "apikey: $SUPABASE_ANON_KEY" \
+            -H "Authorization: Bearer $SUPABASE_ANON_KEY")
+          echo "Response: $body"
+          echo "$body" | grep -q '"club_vancouver"' || { echo "Unexpected response — is the project paused?"; exit 1; }
