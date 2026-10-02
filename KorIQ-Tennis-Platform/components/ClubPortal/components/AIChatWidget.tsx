@@ -42,6 +42,11 @@ const UserIcon: React.FC<{ className?: string }> = ({ className = "w-5 h-5" }) =
     </svg>
 );
 
+// Messages contain user input, file names and coach names from the database,
+// so **bold** is turned into elements rather than HTML.
+const renderInlineBold = (line: string) =>
+    line.split(/\*\*(.*?)\*\*/g).map((part, i) => (i % 2 === 1 ? <strong key={i}>{part}</strong> : part));
+
 // Mock AI responses based on intent
 const generateAIResponse = (message: string, coaches: Coach[], uploadedFiles: UploadedFile[]): { content: string; data?: any; actions?: ChatAction[] } => {
     const lowerMsg = message.toLowerCase();
@@ -474,16 +479,11 @@ const AIChatWidget: React.FC<AIChatWidgetProps> = ({
                                 : 'bg-gray-100 text-gray-800 rounded-bl-md'
                         }`}>
                             <div className="text-sm whitespace-pre-wrap">
-                                {message.content.split('\n').map((line, i) => {
-                                    line = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-                                    return (
-                                        <p 
-                                            key={i} 
-                                            className={i > 0 ? 'mt-2' : ''}
-                                            dangerouslySetInnerHTML={{ __html: line }}
-                                        />
-                                    );
-                                })}
+                                {message.content.split('\n').map((line, i) => (
+                                    <p key={i} className={i > 0 ? 'mt-2' : ''}>
+                                        {renderInlineBold(line)}
+                                    </p>
+                                ))}
                             </div>
                             
                             {message.actions && message.actions.length > 0 && (
