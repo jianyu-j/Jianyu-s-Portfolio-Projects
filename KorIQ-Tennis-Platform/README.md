@@ -131,6 +131,8 @@ To stand up your own database: create a Supabase project, disable **Confirm emai
 
 The hosted demo is a static Vite build served by GitHub Pages from the `demo/` folder. To refresh it after changing the app, run `npm run build:demo` and commit the result.
 
+The shared database runs on Supabase's Free plan, which pauses projects that see too little database traffic. `.github/workflows/koriq-supabase-keepalive.yml` queries it every 4 hours to prevent that; add a `SUPABASE_ACCESS_TOKEN` repository secret (a Supabase personal access token) and the same job will also resume the project automatically if it is ever paused.
+
 ### Demo accounts
 
 All seeded accounts use the password `password`. Type the short username or the full email:

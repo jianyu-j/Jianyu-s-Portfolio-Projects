@@ -1574,7 +1574,7 @@ const AppContent = () => {
     // Supabase mode: load the public directory and restore a persisted session
     // before rendering anything that reads from the data cache.
     const [booting, setBooting] = useState(authService.remote);
-    const [bootError, setBootError] = useState<string | null>(null);
+    const [databaseUnavailable, setDatabaseUnavailable] = useState(false);
 
     useEffect(() => {
         if (!authService.remote) return;
@@ -1586,7 +1586,7 @@ const AppContent = () => {
                 if (!cancelled && restored) setUser(restored);
             } catch (err) {
                 console.error('[App] bootstrap failed', err);
-                if (!cancelled) setBootError(err instanceof Error ? err.message : 'Could not reach the database.');
+                if (!cancelled) setDatabaseUnavailable(true);
             } finally {
                 if (!cancelled) setBooting(false);
             }
@@ -1661,9 +1661,9 @@ const AppContent = () => {
 
     return (
         <ErrorBoundary>
-            {bootError && (
-                <div className="fixed top-0 inset-x-0 z-[60] bg-red-600 text-white text-xs text-center py-2 px-4">
-                    Database unavailable: {bootError}. Some data may not load.
+            {databaseUnavailable && (
+                <div role="alert" className="fixed top-0 inset-x-0 z-[60] bg-red-600 text-white text-xs text-center py-2 px-4">
+                    The KorIQ database is temporarily unavailable, so signing in won't work right now. Please try again in a few minutes.
                 </div>
             )}
             <AuthModal

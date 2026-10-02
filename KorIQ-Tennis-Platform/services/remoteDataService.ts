@@ -110,8 +110,16 @@ const playerToRow = (p: Partial<Player>) => {
     });
 };
 
+export const DATABASE_UNREACHABLE_MESSAGE = "Can't reach the KorIQ database right now. Please try again in a few minutes.";
+
+/** Browser fetch failures (offline, DNS, CORS, paused project) across Chrome, Firefox and Safari. */
+export const isNetworkError = (message: string): boolean =>
+    /failed to fetch|networkerror|load failed|fetch failed|network request failed/i.test(message);
+
 const fail = (ctx: string, error: { message: string } | null) => {
-    if (error) throw new Error(`${ctx}: ${error.message}`);
+    if (!error) return;
+    console.error(`[remoteData] ${ctx}:`, error);
+    throw new Error(isNetworkError(error.message) ? DATABASE_UNREACHABLE_MESSAGE : `${ctx}: ${error.message}`);
 };
 
 // ---------------------------------------------------------------------------
@@ -131,7 +139,10 @@ export const remoteAuth = {
     async signIn(identifier: string, password: string): Promise<AuthUser> {
         const sb = requireSupabase();
         const { data, error } = await sb.auth.signInWithPassword({ email: normaliseIdentifier(identifier), password });
-        if (error) throw new Error(error.message);
+        if (error) {
+            if (isNetworkError(error.message)) fail('Signing in', error);
+            throw new Error(error.message);
+        }
         return { id: data.user.id, email: data.user.email ?? '' };
     },
 
@@ -145,6 +156,7 @@ export const remoteAuth = {
         const { data, error } = await sb.auth.signUp({ email: email.trim().toLowerCase(), password });
         if (error) {
             if (/already|registered|exists/i.test(error.message)) return { user: null, alreadyRegistered: true };
+            if (isNetworkError(error.message)) fail('Signing up', error);
             throw new Error(error.message);
         }
         if (!data.user || (data.user.identities && data.user.identities.length === 0)) {
